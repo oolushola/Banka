@@ -1,0 +1,169 @@
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#66C99C;
+}
+
+body{
+    padding:0;
+    margin:0;
+}
+#introduction{
+    text-align: center;
+    position: relative;
+    margin:auto;
+    padding:0px 60px;
+}
+#introduction_logo{
+    height: 70px;
+    margin-top:10px;
+}
+#introduction_heading{
+    padding:0;
+    margin:0px;
+    text-align:center;
+    text-shadow: 1px 1px 0px #000;
+    letter-spacing:15px;
+    color: #FDC20E;
+
+}
+#introduction > p {
+    font-size:12px;
+    padding-bottom:10px;
+    color:#000;
+}
+.asideLeft{
+    height:450px;
+    background:url("../images/register-image.jpg");
+    background-position: left;
+    background-size: cover;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft__loginPageBanner{
+    height:450px;
+    background:url("../images/login-bgimage.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft__passwordreset{
+    height:450px;
+    background:url("../images/password-forgot-banner-two.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft_container{
+    margin-top:100px;
+    width:300px;
+    height:300px;
+    padding-left:20px;
+  }
+  
+  .asideLeft_container > p{
+      color:yellow;
+      font-size:13px;
+      text-shadow:2px 2px 2px green;
+      font-weight: 700;
+      margin-bottom:5px;
+  }
+  
+  .asideLeft_container > h1{
+    font-size:44px;
+    color:#fff;
+    margin:0px 0px 15px 0px; 
+    line-height: 55px;
+    text-shadow: 1px 1px 1px green;
+    letter-spacing: 5px;
+  }
+  
+  #asideLeft_container_heading{
+    letter-spacing: 0px;
+  }
+  
+  .btn-explore{
+      padding: 10px;
+      background: #FDC20E;
+      border: none;
+      color: #fff;
+      text-shadow: 1px 1px 1px #000;
+      font-size: 13px;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      cursor: pointer;
+      margin:30px 0;
+  }
+  
+  #inscribe{
+    font-size:11px;
+    color:#FDC20E;
+    text-shadow: none
+  }
+
+  .asideRight{
+      height:450px;
+  }
+  .asideRight > h1{
+      padding:20px 10px;
+      margin-top:30px;
+  }
+
+  .asideRight > p{
+      font-size:12px;
+      color:#333;
+      padding:0px 5px 5px 10px;
+  }
+  .formGroup{
+      margin-top:18px;
+      padding-left:10px;
+  }
+  .formGroup_label{
+      display:block;
+      font-size:13px;
+      font-weight: 700;
+      color:#333;
+      padding-bottom:3px;
+  }
+
+  #tandc{
+      font-size:12px;
+      color:#333;
+      margin-bottom:15px;
+  }
+
+  
+
+  .misc{
+      font-size:12px;
+      font-weight: 700;   
+  }
+  .misc > a{
+      color:#777
+  }
+
+  #forgetPassword{
+      text-align: center;
+      margin-top:15px;
+      font-size:13px;
+      font-weight:700;
+  }
+
+  #forgetPassword > a{
+      color:#777;
+  }
+
+  .errorMessage{
+      width:100%;
+      background:#ddd;
+      padding:5px;
+      font-size:12px;
+      font-weight:bold;
+      margin-top:10px;
+      padding-left:10px;
+      color:#f00;
+}
