@@ -1,0 +1,133 @@
+/* 
+Andela Developer Challenge
+Author: Odejobi Olushola D.
+Project: Banka App
+*/
+
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    max-width:969px;
+    padding:2px;
+    /* border:1px solid #000; */
+    margin:auto;
+    border-radius:5px;
+    box-shadow:2px 1px 1px #ccc;
+}
+
+.row::after{
+    content: '';
+    clear: both;
+    display: table;
+}
+
+[class*="col-"]{
+    float: left;
+    padding:3px;
+    /* border:1px solid red; */
+    margin:0px;
+}
+
+/* For mobile phones */
+[class*="col-"]{
+    width:100%;
+}
+
+@media only screen and (min-width:768px){
+    /* Desktop view */
+    .col-1{width:8.33%}
+    .col-2{width:16.66%}
+    .col-3{width:24.99%}
+    .col-4{width:33.32%}
+    .col-5{width:41.65%}
+    .col-6{width:49.98%}
+    .col-7{width:58.31%}
+    .col-8{width:66.64%}
+    .col-9{width:74.97%}
+    .col-10{width:83.3%}
+    .col-11{width:91.63%}
+    .col-12{width:99.96%}
+}
+
+
+@media only screen and (min-width:600px){
+    /* Tablet view */
+    .col-1-tab{width:8.33%}
+    .col-2-tab{width:16.66%}
+    .col-3-tab{width:24.99%}
+    .col-4-tab{width:33.32%}
+    .col-5-tab{width:41.65%}
+    .col-6-tab{width:49.98%}
+    .col-7-tab{width:58.31%}
+    .col-8-tab{width:66.64%}
+    .col-9-tab{width:74.97%}
+    .col-10-tab{width:83.3%}
+    .col-11-tab{width:91.63%}
+    .col-12-tab{width:99.96%}
+}
+
+input:focus, button:focus{
+    outline: none;
+  }
+  input{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  a{
+    text-decoration: none;
+    color:#fefefe
+  }
+  a:hover{
+        color:#FDC20E;
+        text-shadow: 1px 1px 0px #000;
+        text-decoration: underline
+  }
+
+
+.inputBx{
+    font-size:15px;
+    padding:9px;
+    width: 100%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+.inputBx::placeholder{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.btn{
+  padding:10px 15px;
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  border-radius:5px;
+  border:none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color:#5f6468;
+  font-size:11px;
+  margin:10px 0px;
+  width:100%;
+}
+.btn:hover{
+  border-radius: 5px;
+  color: #fefefe;
+  background:#FDC20E
+}
+
+input[type="checkbox"]{
+    margin-left:10px;
+}
+.center{
+    text-align: center;
+}
+
+
+
+
+
