@@ -185,7 +185,7 @@ body{
 }
 
 .menucontainer{
-    height:91vh;
+    max-height:91vh;
     overflow:auto;
     padding-top:40px;
     background:#f8f8f8;
