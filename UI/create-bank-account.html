@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Create a Bank Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/grid-layout.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <script src="js/create-bank-account.js"></script>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-12 header">
+            <div id="header_profileName">ógaBanka
+                <ul>
+                    <li>Notifications(2)</li>
+                    <li>Logout &rang;</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <aside class="col-2 col-3-tab menucontainer">
+            <div id="menucontainer_img">
+                <img src="images/image-placeholder.jpg" class="img">
+            </div>
+            <h1 class="center">Olushola Odejobi</h1>
+
+            <ul class="menu">
+                <li><a href="user-profile.html">Dashboard</a></li>
+                <li><a href="update-profile.html">Update Profile</a></li>
+                <li><a href="upload-photo.html">Upload Profile photo</a></li>
+                <li><a href="change-password.html">Change Password </a></li>
+                <li><a href="create-bank-account.html">Create Bank Account</a></li>
+                <li><a href="transaction-history.html">Transaction History</a></li>
+                <li>Logout</li>
+            </ul>
+
+        </aside>
+        <aside class="col-7 col-9-tab">
+            <h1 id="page_title">Create Bank Account</h1>
+            <div id="errorMessage"></div>
+            <div class="row">
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="first_name" class="formGroup_label">First Name</label>
+                        <input class="inputBx nb" disabled placeholder="John" id="first_name" name="first_name">
+                    </div>
+                </div>
+
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="last_name" class="formGroup_label">Last Name</label>
+                        <input class="inputBx nb" disabled placeholder="Smith" id="last_name" name="last_name">
+                    </div>
+                </div>
+
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="phone_no"  class="formGroup_label">Phone No</label>
+                        <input class="inputBx nb" disabled placeholder="+234802244****" id="phone_no" name="phone_no">
+                    </div>
+                </div>
+
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="email" class="formGroup_label">Email</label>
+                        <input class="inputBx nb" disabled placeholder="johndoe@ogabanka.com" id="email" name="email">
+                    </div>
+                </div>
+
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="phone_no"  class="formGroup_label">Gender</label>
+                        <input class="inputBx nb" disabled placeholder="female" id="gender" name="gender">
+                    </div>
+                </div>
+                <form method="POST" action="">
+                    <div class="col-6 p15">
+                        <div class="formGroup">
+                            <label for="date_of_birth" class="formGroup_label">Date of Birth*</label>
+                            <input type="date" class="inputBx p6" placeholder="YYYY-MM-DD" id="date_of_birth" name="date_of_birth">
+                        </div>
+                    </div>
+                
+                    <div class="col-12 p15" >
+                        <div class="formGroup">
+                            <label for="account_type" class="formGroup_label">Account Type*</label>
+                            <input type="radio" class="p6 accounttype" name="accounttype" value="savings account">
+                                <span class="radio_title">Savings Account</span>
+                            <input type="radio" class="p6 accounttype" name="accounttype" value="current account">
+                                <span class="radio_title">Current Account</span>
+
+                                <input type="hidden" name="account_type" id="account_type">
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="col-4 p15">
+                    <button type="submit" class="btn" id="createBankAccount">Create Bank Account</button>
+                </div>
+            </div>
+    
+        </aside>
+        <aside class="col-3 col-12-tab notification">
+            <table width="100%" border="0">
+                <tr>
+                    <td id="notification_overview" colspan="2">Overview</td>
+                </tr>
+                <tr>
+                    <td class="notification_label">Account Number:</td>
+                    <td class="notification_value">Not Set</td>
+                </tr>
+                <tr>
+                    <td class="notification_label">Total Number of Transanctions:</td>
+                    <td class="notification_value">120</td>
+                </tr>
+                <tr>
+                    <td class="notification_label">Account Status</td>
+                    <td class="notification_value">Active</td>
+                </tr>
+                <tr>
+                    <td class="notification_label">Account Type</td>
+                    <td class="notification_value">Current Account</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="" style="padding:10px; font-size:11px; background:#fff;">
+                        <p><strong>Note:</strong></p>
+                        <p>ogaBanka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
+                    </td>
+                </tr>
+            </table>
+        </aside>
+    </div>
+    
+</body>
+</html>
