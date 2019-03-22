@@ -3,16 +3,15 @@
 
 window.onload = function(){
     let email = document.getElementById('email');
-    let password_reset = document.getElementById('password_reset');
+    let passwordResetBtn = document.getElementById('password_reset');
 
-    password_reset.addEventListener('click', validate);
+    passwordResetBtn.onclick = (event)=>{
+        event.preventDefault();
+        validatePasswordReset();
+    };
 }
 
-
-
-
-
-function validate(){
+const validatePasswordReset = ()=>{
     let errormessageHolder = document.getElementById('errorMessage');
     errormessageHolder.innerHTML='';
     errormessageHolder.removeAttribute("class");
@@ -30,13 +29,14 @@ function validate(){
             return false;           
         }
     }
+    window.location = "user-sign-in.html";
 
 }
 
-function validateEmail(email){
+const validateEmail = (email)=>{
     //check for @
-    var atSymbol = email.indexOf('@');
-    var dot = email.indexOf('.');
+    let atSymbol = email.indexOf('@');
+    let dot = email.indexOf('.');
         if(atSymbol < 1 ){return false;}
     
         else if(dot <= atSymbol + 2) {return false;}
@@ -47,6 +47,4 @@ function validateEmail(email){
         return true;
 
     }
-
-
 }
