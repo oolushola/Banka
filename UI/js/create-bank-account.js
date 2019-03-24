@@ -14,7 +14,6 @@ window.onload = ()=>{
     }
 }
 
-
 const validateBankAccount = () =>{
     let errordisplay = document.querySelector('#errorMessage');
     errordisplay.innerHTML='';
@@ -29,11 +28,7 @@ const validateBankAccount = () =>{
     if(account_type.value===''){
         errordisplay.textContent = "Choose an account type you'd prefer.";
         errordisplay.className = "errorMessage";
-    }
-
-    
-
-    
+    }  
 }
 
 
