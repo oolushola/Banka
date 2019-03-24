@@ -6,15 +6,13 @@ window.onload = function(){
     let password = document.getElementById('password');
     let signup = document.getElementById('signup');
 
-    signup.addEventListener('click', validate);
-
+    signup.onclick = (event)=>{
+        event.preventDefault();
+        validateClientSignUp();
+    }
 }
 
-
-
-
-
-function validate(){
+const validateClientSignUp = ()=> {
     let errormessageHolder = document.getElementById('errorMessage');
     errormessageHolder.innerHTML='';
     errormessageHolder.removeAttribute("class");
@@ -54,13 +52,14 @@ function validate(){
             errormessageHolder.className = 'errorMessage';  
             return false;
         }
+    window.location = 'user-sign-in.html';
      
 }
 
-function validateEmail(email){
+const validateEmail = (email)=>{
     //check for @
-    var atSymbol = email.indexOf('@');
-    var dot = email.indexOf('.');
+    let atSymbol = email.indexOf('@');
+    let dot = email.indexOf('.');
         if(atSymbol < 1 ){return false;}
     
         else if(dot <= atSymbol + 2) {return false;}
@@ -69,8 +68,5 @@ function validateEmail(email){
     else if(dot === email.length - 1){return false;}
     else{
         return true;
-
     }
-
-
 }
