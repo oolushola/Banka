@@ -8,12 +8,13 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../staff/stylesheets/staff-style.css">
+    <script src="javascripts/admin-create-administrative-acount.js"></script>
 </head>
 <body>
 
     <div class="row">
         <div class="col-12 header">
-            <div id="header_profileName">ógaBanka - Admin.
+            <div id="header_profileName">Banka - Admin.
                 <ul>
                     <li>Logout &rang;</li>
                 </ul>
@@ -74,26 +75,26 @@
 
                 <div class="col-6 p15">
                     <div class="formGroup">
-                        <label for="phone_no" class="formGroup_label">Phone No*</label>
-                        <input class="inputBx" placeholder="+234802244****" id="phone_no" name="phone_no">
-                    </div>
-                </div>
-
-                <div class="col-6 p15">
-                    <div class="formGroup">
-                        <label for="state" class="formGroup_label">Email*</label>
-                        <input class="inputBx" placeholder="Lagos" id="state" name="state">
+                        <label for="email" class="formGroup_label">Email*</label>
+                        <input class="inputBx" placeholder="xyz@ogabanka.com" id="email" name="email">
                     </div>
                 </div>
                 <div class="col-6 p15">
                     <div class="formGroup">
                         <label for="state" class="formGroup_label">Password*</label>
-                        <input class="inputBx" placeholder="Lagos" id="state" name="state">
+                        <input type="password" class="inputBx" placeholder="***************" id="password" name="password">
+                    </div>
+                </div>
+
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="phone_no" class="formGroup_label">Phone No</label>
+                        <input class="inputBx" placeholder="+234802244****" id="phone_no" name="phone_no">
                     </div>
                 </div>
                 
                 <div class="col-4 p15">
-                    <button type="submit" class="btn" id="updateProfile">Create Administrator</button>
+                    <button type="submit" class="btn" id="administrator">Create Administrator</button>
                 </div>
             </form>
 
@@ -105,9 +106,9 @@
                     <td id="notification_overview" colspan="2">Overview</td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="" style="padding:10px; font-size:11px; background:#fff;">
+                    <td colspan="2" class="notification_note">
                         <p><strong>Note:</strong></p>
-                        <p>ogaBanka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
+                        <p>Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
                     </td>
                 </tr>
             </table>
