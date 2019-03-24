@@ -6,14 +6,13 @@ window.onload = function(){
     let password = document.getElementById('password');
     let login = document.getElementById('login');
 
-    login.addEventListener('click', validate);
+    login.onclick = (event)=>{
+        event.preventDefault();
+        validateClientLogin();
+    };
 }
 
-
-
-
-
-function validate(){
+const validateClientLogin = ()=>{
     let errormessageHolder = document.getElementById('errorMessage');
     errormessageHolder.innerHTML='';
     errormessageHolder.removeAttribute("class");
@@ -46,13 +45,14 @@ function validate(){
             return false;
         }
     }
+    window.location="user-profile.html";
 
 }
 
-function validateEmail(email){
+const validateEmail = (email)=>{
     //check for @
-    var atSymbol = email.indexOf('@');
-    var dot = email.indexOf('.');
+    let atSymbol = email.indexOf('@');
+    let dot = email.indexOf('.');
         if(atSymbol < 1 ){return false;}
     
         else if(dot <= atSymbol + 2) {return false;}
@@ -61,8 +61,5 @@ function validateEmail(email){
     else if(dot === email.length - 1){return false;}
     else{
         return true;
-
     }
-
-
 }
