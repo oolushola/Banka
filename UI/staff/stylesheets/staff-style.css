@@ -17,3 +17,8 @@
 .mt-2{
 	margin-top:-2px;
 }
+.notification_note{
+	padding:10px; 
+	font-size:11px; 
+	background:#fff;
+}
