@@ -331,3 +331,8 @@ body{
 .filter ul{
     list-style: none;
 }
+.notification_note{
+	padding:10px; 
+	font-size:11px; 
+	background:#fff;
+}
