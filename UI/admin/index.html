@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../staff/stylesheets/staff-style.css">
+    <script src="javascripts/admin-index.js"></script>
+</head>
+<body>
+    <div class="container staffLoginCont">
+        <header id="introduction">
+            <img src="../images/epicmain-logo.png" id="introduction_logo">
+            <h1 id="introduction_heading">Banka</h1>
+            <p>Together, We Are Stronger !!!</p>
+            <h2>Admin Login</h2>
+        </header>
+
+        <div class="row">
+            <div id="errorMessage"></div>
+                <form action="" method="POST">
+                    <div class="col-12 formGroup">
+                        <label for="email" class="formGroup_label">Email</label>
+                        <input type="text" class="inputBx" name="email" id="email" placeholder="e.g.johndoe@Banka.com">
+                    </div>
+    
+                    <div class="col-12 col-12-tab formGroup">
+                        <label for="email" class="formGroup_label">Password</label>
+                        <input type="password" class="inputBx" name="password" id="password" placeholder="*************">
+                    </div>
+                    <div class="col-12">
+                        <input type="checkbox" class="mgb20" name="loggedIn" id="loggedIn" checked ><span id="tandc">Keep me logged in</span>
+                    </div>
+                    <button type="button" class="btn btn-mg-15" id="adminLogin">Login</button>
+                </form>
+        </div>
+
+    </div>
+
+    
+</body>
+</html>
