@@ -7,12 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../staff/stylesheets/staff-style.css">
+    <script src="javascripts/admin-create-administrative-category.js"></script>
 </head>
 <body>
 
     <div class="row">
         <div class="col-12 header">
-            <div id="header_profileName">ógaBanka - Admin.
+            <div id="header_profileName">Banka - Admin.
                 <ul>
                     <li>Logout &rang;</li>
                 </ul>
@@ -47,13 +49,13 @@
             <form method="POST" action="">
                 <div class="col-12 p15">
                     <div class="formGroup">
-                        <label for="customer_id" class="formGroup_label">Administrative Category*</label>
-                        <input type="text" class="inputBx"  id="customer_id" name="customer_id" placeholder="Staff | Admin">
+                        <label for="admin_category" class="formGroup_label">Administrative Category*</label>
+                        <input type="text" class="inputBx"  id="admin_category" name="admin_category" placeholder="Staff | Admin">
                     </div>
                 </div>
 
                 <div class="col-4 p15">
-                    <button type="submit" class="btn" id="suspendAccount">create Account Category</button>
+                    <button type="submit" class="btn" id="accountCategory">create Account Category</button>
                 </div>
             </form>
         </aside>
@@ -64,9 +66,9 @@
                     <td id="notification_overview" colspan="2">Overview</td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="" style="padding:10px; font-size:11px; background:#fff;">
+                    <td colspan="2" class="notification_note">
                         <p><strong>Note:</strong></p>
-                        <p>ogaBanka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
+                        <p>Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
                     </td>
                 </tr>
             </table>
