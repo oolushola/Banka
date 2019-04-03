@@ -1,0 +1,337 @@
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#66C99C;
+}
+body{
+    padding:0;
+    margin:0;
+}
+#introduction{
+    text-align: center;
+    position: relative;
+    margin:auto;
+    padding:0px 60px;
+}
+#introduction_logo{
+    height: 70px;
+    margin-top:10px;
+}
+#introduction_heading{
+    padding:0;
+    margin:0px;
+    text-align:center;
+    text-shadow: 1px 1px 0px #000;
+    letter-spacing:15px;
+    color: #FDC20E;
+
+}
+#introduction > p {
+    font-size:12px;
+    padding-bottom:10px;
+    color:#000;
+}
+.asideLeft{
+    height:450px;
+    background:url("../images/register-image.jpg");
+    background-position: left;
+    background-size: cover;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft__loginPageBanner{
+    height:450px;
+    background:url("../images/login-bgimage.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft__passwordreset{
+    height:450px;
+    background:url("../images/password-forgot-banner-two.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    border:1px solid;
+    position: relative;
+}
+
+.asideLeft_container{
+    margin-top:100px;
+    width:300px;
+    height:300px;
+    padding-left:20px;
+  }
+  
+  .asideLeft_container > p{
+      color:yellow;
+      font-size:13px;
+      text-shadow:2px 2px 2px green;
+      font-weight: 700;
+      margin-bottom:5px;
+  }
+  
+  .asideLeft_container > h1{
+    font-size:44px;
+    color:#fff;
+    margin:0px 0px 15px 0px; 
+    line-height: 55px;
+    text-shadow: 1px 1px 1px green;
+    letter-spacing: 5px;
+  }
+  
+  #asideLeft_container_heading{
+    letter-spacing: 0px;
+  }
+  
+  .btn-explore{
+      padding: 10px;
+      background: #FDC20E;
+      border: none;
+      color: #fff;
+      text-shadow: 1px 1px 1px #000;
+      font-size: 13px;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      cursor: pointer;
+      margin:30px 0;
+  }
+  
+  #inscribe{
+    font-size:11px;
+    color:#FDC20E;
+    text-shadow: none
+  }
+
+  .asideRight{
+      height:450px;
+  }
+  .asideRight > h1{
+      padding:20px 10px;
+      margin-top:30px;
+  }
+
+  .asideRight > p{
+      font-size:12px;
+      color:#333;
+      padding:0px 5px 5px 10px;
+  }
+
+  #tandc{
+      font-size:12px;
+      color:#333;
+      margin-bottom:15px;
+  }
+
+  
+
+  .misc{
+      font-size:12px;
+      font-weight: 700;   
+  }
+  .misc > a{
+      color:#777
+  }
+
+  #forgetPassword{
+      text-align: center;
+      margin-top:15px;
+      font-size:13px;
+      font-weight:700;
+  }
+
+  #forgetPassword > a{
+      color:#777;
+  }
+
+  .errorMessage{
+      width:100%;
+      background:#ddd;
+      padding:5px;
+      font-size:12px;
+      font-weight:bold;
+      margin-top:10px;
+      padding-left:10px;
+      color:#f00;
+}
+
+.header{
+    padding:5px;
+    background:#fff;
+    padding-left:80px;
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+#header_profileName{
+    font-size:30px;
+    color:#FDC20E;
+    margin:5px 10px;
+    font-weight: 700;
+    text-shadow: 1px 1px 0px #000   
+}
+#header_profileName ul{
+    list-style:none; 
+    float:right
+}
+#header_profileName ul > li{
+    font-size:13px; 
+    display:inline-block; 
+    padding-left:30px; 
+    padding-right:30px; 
+    color:#333;
+    text-shadow: none
+}
+
+.menucontainer{
+    height:91vh;
+    overflow:auto;
+    padding-top:40px;
+    background:#f8f8f8;
+}
+
+.menu{
+    list-style-type: none;
+    margin-top:35px;
+}
+
+.menu li{
+    padding: 8px;
+    margin-bottom: 7px;
+    margin-top:3px;
+    background-color: #33b5e5;
+    color:#fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:13px;
+}
+.menu li:hover{
+    background-color: #0099cc;
+}
+.img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.menucontainer_profileOdd{
+    font-size:11px; 
+    padding-left:15px; 
+    background:#ccc; 
+    padding:5px; 
+    margin-top:3px; 
+    color:#000; 
+    text-shadow: 1px 1px 1px #fff;
+}
+.menucontainer_profileEven{
+    font-size:11px; 
+    padding-left:15px; 
+    background:#eee; 
+    padding:5px; 
+    margin-top:3px; 
+    color:#000; 
+    text-shadow: 1px 1px 1px #fff;
+}
+#menucontainer_img{ 
+    margin:auto; 
+    height:120px; 
+    width:120px; 
+    border-radius:100%;
+    
+}
+
+#page_title{
+    padding:20px 25px;
+}
+.dashboardModuleName{
+    background-color: #30a5ff;
+    color:#fff;
+    padding:33px 5px;
+    font-size:20px;
+    font-weight: 700;
+    text-align: center;
+    list-style-type: none;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.dashboardModuleValue{
+    border-radius: 0px 5px 5px 0px;
+    list-style-type: none;
+    padding:36.5px 15px;
+    font-size:16px;
+    box-shadow: 1px 1px 1px #ccc;
+    text-align: center;
+    font-family: constantia;
+    color:#777
+}
+.account-module-color{
+    background:#FFB53E
+}
+.account-status-color{
+    background:#F9243F
+}
+.account-cashier-module-color{
+    background: #1EBFAE;
+}
+
+
+.subheading{
+    background:#f7f7f8; 
+    padding:10px; 
+    font-size:11px; 
+    font-weight:bold; 
+    text-transform:uppercase;
+    color:#333;
+    border-top:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+.subheading:first-child{
+    border-left:1px solid #ccc;
+}
+.rowodd{
+    font-size:11px; 
+    background:#d6edff; 
+    border-right:1px solid #ccc;
+    padding:10px;
+    color:#333;
+}
+.roweven{
+    font-size:11px; 
+    background:#f8f8f8; 
+    border-right:1px solid #ccc;
+    color:#333;
+    padding: 10px;
+}
+
+.notification{
+    padding:5px 5px;
+    margin:50px 0px;
+    background:#fbfbfb;
+}
+
+#notification_overview{
+    background:#FFB53E;
+    padding:8px 5px; 
+    color:#fff; 
+    font-size:11px; 
+    font-weight:700
+}
+.notification_label{
+    padding:10px; 
+    font-size:11px; 
+    font-weight:700; 
+    background:#fff;
+}
+.notification_value{
+   padding:10px; 
+   font-size:11px;  
+   background:#fff;
+}
+.filter ul{
+    list-style: none;
+}
+.notification_note{
+	padding:10px; 
+	font-size:11px; 
+	background:#fff;
+}
