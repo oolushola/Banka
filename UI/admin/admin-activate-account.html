@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Activate an Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../staff/stylesheets/staff-style.css">
+    <script src="javascripts/admin-activate-account.js"></script>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-12 header">
+            <div id="header_profileName">Banka - Admin.
+                <ul>
+                    <li>Logout &rang;</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <aside class="col-2 col-3-tab menucontainer">
+            <div id="menucontainer_img">
+                <img src="../images/image-placeholder.jpg" class="img">
+            </div>
+            <h1 class="center">Akerele H.B.</h1>
+
+            <ul class="menu">
+                <li><a href="admin-profile.html">Dashboard</a></li>
+                <li><a href="admin-generate-account-number.html">Generate Account No.</a></li>
+                <li><a href="admin-view-clients-account.html">View Customers Account</a></li>
+                <li><a href="admin-activate-account.html">Activate Account</a></li>
+                <li><a href="admin-deactivate-account.html">Deactivate Account</a></li>
+                <li><a href="admin-create-account-category.html">Create Account Category</a></li>
+                <li><a href="admin-create-administrative-category.html">Create Administrative Category</a></li>
+                <li><a href="admin-create-administrative-account.html">Create an Administrative Account</a></li>
+                <li>Logout</li>
+            </ul>
+        </aside>
+
+        <aside class="col-7 col-9-tab">
+            <h1 id="page_title">Activate Account</h1>
+            <div id="errorMessage"></div>
+            <form method="POST" action="">
+                <div class="col-12 p15">
+                    <div class="formGroup">
+                        <label for="customer_id" class="formGroup_label">Customer*</label>
+                        <select class="inputBx"  id="customer_id" name="customer_id">
+                            <option value="0">Select a Customer</option>
+                            <option>Omolola Alobioje</option>
+                            <option>Yemisi Komolafe</option>
+                        </select>
+                    </div>
+                    <div class="formGroup">
+                        <label for="photo" class="formGroup_label">Activate*</label>
+                        <input type="checkbox" name="activate" id="activate" ><span id="tandc"> By click, you are agree to activate this user account.</span>
+                    </div>
+                </div>
+
+                <div class="col-4 p15">
+                    <button type="submit" class="btn" id="activateAccount">Activate Account</button>
+                </div>
+            </form>
+        </aside>
+
+        <aside class="col-3 col-12-tab notification">
+            <table width="100%" border="0">
+                <tr>
+                    <td id="notification_overview" colspan="2">Overview</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="notification_note">
+                        <p><strong>Note:</strong></p>
+                        <p>Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, whereusers can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..</p>
+                    </td>
+                </tr>
+            </table>
+        </aside>
+    </div>
+    
+</body>
+</html>
