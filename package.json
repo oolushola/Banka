@@ -1,0 +1,36 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "description": "ADC-LOS43: Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devstart": "nodemon .bin/www",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oolushola/banka.git"
+  },
+  "keywords": [
+    "bank-opeations",
+    "api-endpoints",
+    "ui"
+  ],
+  "author": "Odejobi Olushola D.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oolushola/banka/issues"
+  },
+  "homepage": "https://github.com/oolushola/banka#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  }
+}
