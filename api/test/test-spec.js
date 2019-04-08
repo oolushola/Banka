@@ -231,4 +231,24 @@ describe('Users', () => {
         });
     });
   });
+  describe('change password', () => {
+    it('should change user password', (done) => {
+      const id = 1;
+      const passwordchange = {
+        id: 1,
+        password: 'likemike009',
+      };
+      chai.request(app)
+        .post(`/api/v1/user/change-password/${id}`)
+        .send(passwordchange)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.should.have.property('newPassword');
+          done();
+        });
+    });
+  });
 });

@@ -132,6 +132,19 @@ class userController {
   static getAllUsers(req, res) {
     res.status(200).json({ status: 'success', msg: 'Users List', users });
   }
+
+  static changePassword(req, res) {
+    const { id } = req.params;
+    const userFound = users.find(userdb => userdb.id === Number(id));
+    if (!userFound) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+
+    const newPassword = {
+      id: userFound.id,
+      password: req.body.password,
+    };
+    users.splice(userFound.index, 1, newPassword);
+    return res.status(201).send({ status: 'success', msg: 'password updated', newPassword });
+  }
 }
 
 
