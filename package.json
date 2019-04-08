@@ -4,10 +4,16 @@
   "description": "ADC-LOS43: Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=test nyc --require @babel/register  mocha api/test/*.js --exit",
     "start": "node api/app.js",
-    "devstart": "nodemon --exec babel-node api/app.js",    
+    "devstart": "nodemon --exec babel-node api/app.js",
+    "serve": "babel-watch api/app.js",
     "lint": "eslint"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ]
   },
   "repository": {
     "type": "git",
@@ -50,6 +56,8 @@
     "@babel/plugin-transform-regenerator": "^7.4.3",
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
+    "babel-watch": "^7.0.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
