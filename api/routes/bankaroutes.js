@@ -11,4 +11,7 @@ router.post('/api/v1/auth/user-login', userController.userLogin);
 router.get('/api/v1/user/password-reset', userController.getResetPassword);
 router.post('/api/v1/user/password-reset', userController.resetPassword);
 router.post('/api/v1/user/create-bank-account/:id', userController.createBankAccount);
+router.get('/api/v1/user', userController.specificUser);
+router.post('/api/v1/user/change-password/:id', userController.changePassword);
+router.get('/api/v1/users-list', userController.getAllUsers);
 export default router;
