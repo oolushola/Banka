@@ -1,7 +1,9 @@
 module.exports = {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "mocha": true,
+        "node":true,
     },
     //"extends": "eslint:recommended",
     "extends": "airbnb-base",
@@ -15,7 +17,6 @@ module.exports = {
     },
     "rules": {
         "semi":["error", "always"],
-        "quotes": ["error", "single"],
-        "console":["true"]
+        "quotes": ["error", "single"]
     }
 };

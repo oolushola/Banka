@@ -1,20 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
-import 'dotenv/config';
 
-// const routes = require('./routes/master_route');
+import router from './routes/bankaroutes';
 
 const app = express();
 
 // Parse incoming request data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', router);
 
-app.use('/', (req, res) => {
-  res.send('Hey, lets go with transpiler');
-});
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../UI')));
 
 const PORT = process.env.PORT || 5000;
 

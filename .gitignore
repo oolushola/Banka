@@ -1,1 +1,9 @@
 node_modules/
+
+.env
+
+nyc_output/
+
+.vscode
+
+config.js
