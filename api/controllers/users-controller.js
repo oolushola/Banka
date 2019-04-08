@@ -115,6 +115,23 @@ class userController {
     bankAccount.push(bankaccount);
     return res.status(201).send({ status: 'success', msg: 'account created', bankaccount });
   }
+
+  static specificUser(req, res) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).json({ auth: false, message: 'no token provided.' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      // res.status(200).send(decoded);
+      const getUser = users.find(userdb => userdb.id === decoded.id);
+      if (!getUser) return res.status(400).send('No user found');
+      return res.status(200).send(getUser);
+    });
+  }
+
+  static getAllUsers(req, res) {
+    res.status(200).json({ status: 'success', msg: 'Users List', users });
+  }
 }
 
 
