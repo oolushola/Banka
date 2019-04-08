@@ -104,4 +104,87 @@ describe('Users', () => {
         });
     });
   });
+  describe('Create Bank Account', () => {
+    it('should not create a bank account if user not found', (done) => {
+      const user = { id: 10000 };
+      chai.request(app)
+        .post(`/api/v1/user/create-bank-account/${user.id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          done();
+        });
+    });
+    it('should not register a bank account without date of birth', (done) => {
+      const id = 1;
+      const bankAccount = {
+        account_type: 'current',
+        balance: 700000.00,
+      };
+      chai.request(app)
+        .post(`/api/v1/user/create-bank-account/${id}`)
+        .send(bankAccount)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          done();
+        });
+    });
+    it('should not register a bank account without account type', (done) => {
+      const id = 1;
+      const bankAccount = {
+        dob: '10/10/2000',
+        balance: 700000.00,
+      };
+      chai.request(app)
+        .post(`/api/v1/user/create-bank-account/${id}`)
+        .send(bankAccount)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          done();
+        });
+    });
+    it('should not register a bank account without opening balance', (done) => {
+      const id = 1;
+      const bankAccount = {
+        dob: '10/10/2000',
+        account_type: 'current',
+      };
+      chai.request(app)
+        .post(`/api/v1/user/create-bank-account/${id}`)
+        .send(bankAccount)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          done();
+        });
+    });
+    it('should create bank account for the user', (done) => {
+      const id = 1;
+      // const counter = 0;
+      const bankAccount = {
+        // id: counter + 1,
+        accountNumber: '',
+        createdOn: new Date(),
+        owner: id,
+        dob: '10/10/2000',
+        accountType: 'Savings',
+        status: '',
+        balance: 100000,
+      };
+      chai.request(app)
+        .post(`/api/v1/user/create-bank-account/${id}`)
+        .send(bankAccount)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
