@@ -70,6 +70,18 @@ class userController {
     return res.status(200).send({ auth: true, token, userFound });
   }
 
+  static getResetPassword(req, res) {
+    res.send('render the password reset page');
+  }
+
+  static resetPassword(req, res) {
+    if (!req.body.email) return res.status(400).send({ status: 'failed', msg: 'email is required.' });
+    const user = req.body.email;
+    const getUser = users.find(userdb => userdb.email === user);
+    if (!getUser) return res.status(404).send({ status: 'failed', msg: 'user not found...' });
+    return res.status(200).send({ status: 'success', msg: 'user found' });
+  }
+
   static getCreateBankAccount(req, res) {
     fs.readFile(`${filePath}/index.html`, (err, contents) => {
       if (err) {
