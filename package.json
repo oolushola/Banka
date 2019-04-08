@@ -8,7 +8,8 @@
     "start": "node api/app.js",
     "devstart": "nodemon --exec babel-node api/app.js",
     "serve": "babel-watch api/app.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "nyc": {
     "require": [
