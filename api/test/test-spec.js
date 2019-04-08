@@ -187,4 +187,48 @@ describe('Users', () => {
         });
     });
   });
+  describe('Password Reset', () => {
+    it('should request for user email to reset password', (done) => {
+      const user = {
+        email: '',
+      };
+      chai.request(app)
+        .post('/api/v1/user/password-reset')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should validate if user is registered', (done) => {
+      const user = {
+        email: 'testingmail@mail.com',
+      };
+      chai.request(app)
+        .post('/api/v1/user/password-reset')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should reset user password', (done) => {
+      const user = {
+        email: 'oyebola12@gmail.com',
+      };
+      chai.request(app)
+        .post('/api/v1/user/password-reset')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
