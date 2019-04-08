@@ -34,7 +34,7 @@ describe('Users', () => {
           done();
         });
     });
-    it('should register a user with valid email and password', (done) => {
+    it('should register a new user with valid email and password', (done) => {
       const user = {
         email: 'test@testing.com',
         password: 'pythagoraswinterfield',
@@ -49,6 +49,57 @@ describe('Users', () => {
           res.body.auth.should.be.eql(true);
           res.body.should.have.property('token');
 
+          done();
+        });
+    });
+  });
+
+  describe('Login', () => {
+    it('should not login a user without a valid email', (done) => {
+      const user = {
+        email: 'testing@mail.com',
+        password: 'secret',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/user-login')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should login a user', (done) => {
+      const user = {
+        email: 'odejobiolushola@gmail.com',
+        password: 'likemike009',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/user-login')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('token');
+          res.body.should.have.property('userFound');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(true);
+          done();
+        });
+    });
+    it('should not login a user with a wrong password', (done) => {
+      const user = {
+        email: 'odejobiolushola@gmail.com',
+        password: 'secret',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/user-login')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('auth');
+          res.body.auth.should.eql('false');
           done();
         });
     });
