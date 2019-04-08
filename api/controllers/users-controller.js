@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import config from '../../config';
 import users from '../models/users';
-// import bankAccount from '../models/bankaccount';
+import bankAccount from '../models/bankaccount';
 
 const filePath = path.join(__dirname, '../../UI');
 
@@ -68,6 +68,40 @@ class userController {
 
     const token = jwt.sign({ id: userFound.id }, config.secret, { expiresIn: 86400 });
     return res.status(200).send({ auth: true, token, userFound });
+  }
+
+  static getCreateBankAccount(req, res) {
+    fs.readFile(`${filePath}/index.html`, (err, contents) => {
+      if (err) {
+        return next(err);
+      }
+      res.writeHead(200, { 'content-type': 'text/html' });
+      return res.end(contents, 'utf8');
+    });
+  }
+
+  static createBankAccount(req, res) {
+    const { id } = req.params;
+    const user = users.find(userdb => userdb.id === Number(id));
+    if (!user) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+
+    if (!req.body.dob) return res.status(400).send({ status: 'failed', msg: 'Date of Birth is required.' });
+    if (!req.body.accountType) return res.status(400).send({ status: 'failed', msg: 'account type is required.' });
+    if (!req.body.balance) return res.status(400).send({ status: 'failed', msg: 'opening balance is required.' });
+
+    const bankaccount = {
+      id: bankAccount.length + 1,
+      accountNumber: '',
+      createdOn: new Date(),
+      owner: Number(id),
+      dob: req.body.dob,
+      accountType: req.body.accountType,
+      status: '',
+      balance: req.body.balance,
+    };
+
+    bankAccount.push(bankaccount);
+    return res.status(201).send({ status: 'success', msg: 'account created', bankaccount });
   }
 }
 
