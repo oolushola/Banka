@@ -279,4 +279,33 @@ describe('Staff /', () => {
     });
   });
   // single account
+  describe('View specific user', () => {
+    it('should not display the user profile of a wrong account ', (done) => {
+      const accNo = 12458;
+      const owner = -1;
+      chai.request(app)
+        .get(`/api/v1/${accNo}/${owner}`)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should display single bank account profile', (done) => {
+      const accNum = 1234567810;
+      const id = 1;
+      chai.request(app)
+        .get(`/api/v1/${accNum}/${id}`)
+        .end((end, res) => {
+          res.should.have.status(200);
+          res.body.should.be.an('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
