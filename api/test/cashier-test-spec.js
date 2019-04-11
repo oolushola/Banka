@@ -252,4 +252,31 @@ describe('Staff /', () => {
     });
   });
 
+  // users account
+  describe('All users account ', () => {
+    it('should not display any account, if no one has registered', (done) => {
+      const accounts = 0;
+      chai.request(app)
+        .get('/api/v1/users-account')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+    it('should display all users account', (done) => {
+      chai.request(app)
+        .get('/api/v1/users-account')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
+  // single account
 });
