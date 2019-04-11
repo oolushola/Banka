@@ -163,7 +163,93 @@ describe('Staff /', () => {
           done();
         });
     });
-
   });
-  
+
+  // Debit user account
+  describe('Debit User Account /', () => {
+    it('should not debit an account without an account number', (done) => {
+      const accno = 14587;
+      const transaction = {
+        amount: 3000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${accno}/debit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should not debit an account without an amount ', (done) => {
+      const transaction = {
+        accountNumber: 125786,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should not debit an account thats not found ', (done) => {
+      const transaction = {
+        accountNumber: 125786,
+        amount: 2000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should not debit  account, if old balance is < the amount  to debit', (done) => {
+      const transaction = {
+        accountNumber: 1234567810,
+        amount: 1500000000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    
+    it('should debit a valid registered account', (done) => {
+      const transaction = {
+        accountNumber: 1234567810,
+        amount: 500,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
+
 });
