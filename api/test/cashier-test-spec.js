@@ -93,5 +93,77 @@ describe('Staff /', () => {
         });
     });
   });
+
+  // credit user
+  describe('Credit User Account /', () => {
+    it('should not credit an account without an account number', (done) => {
+      const accno = 14587;
+      const transaction = {
+        type: 'credit',
+        amount: 10000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${accno}/credit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should not credit an account without an amount ', (done) => {
+      const transaction = {
+        accountNumber: 125786,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should not credit an account thats not found ', (done) => {
+      const transaction = {
+        accountNumber: 125786,
+        amount: 2000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+
+    it('should credit a valid registered account', (done) => {
+      const transaction = {
+        accountNumber: 1234567810,
+        amount: 2000,
+      };
+      chai.request(app)
+        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
+        .send(transaction)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+
+  });
   
 });
