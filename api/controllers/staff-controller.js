@@ -114,5 +114,15 @@ class staffController {
       status: 'success', msg: 'transaction successful', account: getUserAccNum, transaction,
     });
   }
+
+  static deleteAccount(req, res) {
+    const accNo = req.params.accountNumber;
+    const userAccount = bankAccount.find(useracc => useracc.accountNumber === Number(accNo));
+    if (!userAccount) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+    const deleteUser = bankAccount.splice(userAccount.index, 1);
+    res.status(200).send({
+      status: 'success', msg: 'account deleted.', deleteUser, userAccount,
+    });
+  }
 }
 export default staffController;
