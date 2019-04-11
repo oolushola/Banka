@@ -40,7 +40,7 @@ class userController {
 
     // check if a user with that email already exists;
     const findEmail = users.find(userdb => userdb.email === user.email);
-    if (findEmail) return res.status(401).json({ status: 'failed', msg: `user with email ${user.email} exists` });
+    if (findEmail) return res.status(409).send({ status: 'failed', msg: `user with email ${user.email} exists` });
 
     users.push(user);
     const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 });
@@ -68,6 +68,41 @@ class userController {
 
     const token = jwt.sign({ id: userFound.id }, config.secret, { expiresIn: 86400 });
     return res.status(200).send({ auth: true, token, userFound });
+  }
+
+  static getUserUpdateProfile(req, res) {
+    res.send('render the user update form page');
+  }
+
+  static updateProfile(req, res) {
+    if (!req.body.firstname) return res.status(400).send({ status: 'failed', msg: 'first name is required.' });
+    if (!req.body.lastname) return res.status(400).send({ status: 'failed', msg: 'last name is required.' });
+    if (!req.body.phone_no) return res.status(400).send({ status: 'failed', msg: 'phone number is required.' });
+
+    const { id } = req.params;
+
+    const userFound = users.find(userdb => userdb.id === Number(id));
+    if (!userFound) return res.status(400).send({ status: 'failed', msg: 'User not found' });
+
+    const updateRecord = {
+      id: userFound.id,
+      email: userFound.email,
+      password: userFound.password,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      phone_no: req.body.phone_no,
+      state: req.body.state,
+      city: req.body.city,
+      occupation: req.body.occupation,
+      gender: req.body.gender,
+      address: req.body.address,
+      type: 'client',
+      isAdmin: false,
+      joined: req.body.joined,
+    };
+
+    users.splice(userFound, 0, updateRecord);
+    return res.status(201).send({ status: 'success', message: 'User information updated successfully.', updateRecord });
   }
 
   static getResetPassword(req, res) {
@@ -109,7 +144,7 @@ class userController {
       dob: req.body.dob,
       accountType: req.body.accountType,
       status: '',
-      balance: req.body.balance,
+      openingBalance: req.body.balance,
     };
 
     bankAccount.push(bankaccount);
@@ -127,10 +162,6 @@ class userController {
       if (!getUser) return res.status(400).send('No user found');
       return res.status(200).send(getUser);
     });
-  }
-
-  static getAllUsers(req, res) {
-    res.status(200).json({ status: 'success', msg: 'Users List', users });
   }
 
   static changePassword(req, res) {

@@ -7,8 +7,8 @@ import app from '../app';
 chai.use(chaiHttp);
 chai.should();
 
-describe('Users', () => {
-  describe('Registration /', () => {
+describe('Users /', () => {
+  describe('Sign up ', () => {
     // Test to get the user registration form
     it('should display user registration form', (done) => {
       chai.request(app)
@@ -74,7 +74,7 @@ describe('Users', () => {
     it('should login a user', (done) => {
       const user = {
         email: 'odejobiolushola@gmail.com',
-        password: 'likemike009',
+        password: 'since1989',
       };
       chai.request(app)
         .post('/api/v1/auth/user-login')
@@ -100,6 +100,102 @@ describe('Users', () => {
           res.should.have.status(401);
           res.body.should.have.property('auth');
           res.body.auth.should.eql('false');
+          done();
+        });
+    });
+  });
+  describe('Update profile', () => {
+    it('should not update user profile without first name', (done) => {
+      const id = 5;
+      const user = {
+        email: 'odejobiolushola@hotmail.com',
+        password: '$2b$08$1h8dVe10SMH7G1J86x7AM..wdLf0xuEU1Qv8KWU9vCfq/PA0RTAPy',
+        lastname: 'testname',
+      };
+      chai.request(app)
+        .put(`/api/v1/update-profile/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.be.a('object');
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should not update user profile without last name', (done) => {
+      const id = 5;
+      const user = {
+        email: 'odejobiolushola@hotmail.com',
+        password: '$2b$08$1h8dVe10SMH7G1J86x7AM..wdLf0xuEU1Qv8KWU9vCfq/PA0RTAPy',
+        firstname: 'testname',
+      };
+      chai.request(app)
+        .put(`/api/v1/update-profile/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.be.a('object');
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should not update user profile without phone number,', (done) => {
+      const id = 5;
+      const user = {
+        email: 'odejobiolushola@hotmail.com',
+        password: '$2b$08$1h8dVe10SMH7G1J86x7AM..wdLf0xuEU1Qv8KWU9vCfq/PA0RTAPy',
+        firstname: 'testname',
+        lastname: 'somename',
+      };
+      chai.request(app)
+        .put(`/api/v1/update-profile/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.be.a('object');
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should not update user profile with an invalid id', (done) => {
+      const id = -1;
+      const user = {
+        email: 'odejobiolushola@hotmail.com',
+        password: '$2b$08$1h8dVe10SMH7G1J86x7AM..wdLf0xuEU1Qv8KWU9vCfq/PA0RTAPy',
+        lastname: 'testname',
+        phone_no: '08022445566',
+      };
+      chai.request(app)
+        .put(`/api/v1/update-profile/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.be.a('object');
+          res.should.have.status(400);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should update user profile', (done) => {
+      const id = 5;
+      const user = {
+        email: 'odejobiolushola@hotmail.com',
+        password: '$2b$08$1h8dVe10SMH7G1J86x7AM..wdLf0xuEU1Qv8KWU9vCfq/PA0RTAPy',
+        firstname: 'testname',
+        lastname: 'sometest',
+        phone_no: '08022445566',
+      };
+      chai.request(app)
+        .put(`/api/v1/update-profile/${id}`)
+        .send(user)
+        .end((err, res) => {
+          res.should.be.a('object');
+          res.should.have.status(201);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('success');
           done();
         });
     });
