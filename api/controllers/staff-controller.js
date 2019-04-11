@@ -130,5 +130,24 @@ class staffController {
     if (accounts <= 0) return res.status(200).send({ status: 'success', msg: 'no user has registered.' });
     res.status(200).json({ status: 'success', msg: 'Account  List', bankAccount });
   }
+
+  static getSpecificAccount(req, res) {
+    const accNo = req.params.accountNumber;
+    const owner = req.params.id;
+    // get the account user basic information
+    const getUser = users.find(user => user.id === Number(owner));
+    // use this to get the necessary information about the user bank account
+    const getUserAccount = bankAccount.find(accountNo => accountNo.accountNumber === Number(accNo));
+
+    if (!getUser) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+
+    // use this to get all the necessary information about the user transactions.
+    const transactionHistory = transactions.filter(userTrans => userTrans.accountNumber === Number(accNo));
+
+
+    res.status(200).send({
+      status: 'success', msg: 'user found', getUser, getUserAccount, transactionHistory,
+    });
+  }
 }
 export default staffController;
