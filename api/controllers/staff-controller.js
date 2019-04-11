@@ -124,5 +124,11 @@ class staffController {
       status: 'success', msg: 'account deleted.', deleteUser, userAccount,
     });
   }
+
+  static allUsersAccount(req, res) {
+    const accounts = bankAccount.length;
+    if (accounts <= 0) return res.status(200).send({ status: 'success', msg: 'no user has registered.' });
+    res.status(200).json({ status: 'success', msg: 'Account  List', bankAccount });
+  }
 }
 export default staffController;

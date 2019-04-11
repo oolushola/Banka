@@ -22,6 +22,7 @@ router.post('/api/v1/auth/staff/login', staffController.staffLogin);
 router.post('/api/v1/transaction/:accountno/credit', staffController.creditAccount);
 router.post('/api/v1/transaction/:accountno/debit', staffController.debitAccount);
 router.delete('/api/v1/accounts/:accountNumber', staffController.deleteAccount);
+router.get('/api/v1/users-account', staffController.allUsersAccount); // an admin will share in this route too.
 
 
 export default router;
