@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 import path from 'path';
 import fs from 'fs';
 import users from '../models/users';
-// import bankAccount from '../models/bankaccount';
-// import transactions from '../models/transaction';
+import bankAccount from '../models/bankaccount';
+import transactions from '../models/transaction';
 import config from '../../config';
 
 const filePath = path.join(__dirname, '../../UI/staff');
@@ -33,6 +33,44 @@ class staffController {
 
     const token = jwt.sign({ id: findUser.id }, config.secret, { expiresIn: 86400 });
     return res.status(200).send({ auth: true, token, findUser });
+  }
+
+  static creditAccount(req, res) {
+    if (!req.body.accountNumber) return res.status(400).send({ status: 'failed', msg: 'account number' });
+    if (!req.body.amount) return res.status(400).send({ status: 'failed', msg: 'amount is required.' });
+
+    const getUserAccNum = bankAccount.find(bankAccountdb => bankAccountdb.accountNumber === Number(req.body.accountNumber));
+    if (!getUserAccNum) return res.status(404).send({ status: 'failed', msg: 'account number not found' });
+
+    // go and check if this account exists in the transaction table and get the last transaction of the user
+
+    let transactionFound;
+    let transactionIndex;
+
+    transactions.map((getTransactions, index) => {
+      transactionFound = getTransactions;
+      transactionIndex = index;
+    });
+
+
+    const oldBalance = transactionFound.newBalance;
+    const newBalance = parseFloat(oldBalance + Number(req.body.amount));
+
+    const transaction = {
+      id: transactions.length + 1,
+      createdOn: new Date(),
+      type: req.body.type,
+      accountNumber: Number(req.body.accountNumber),
+      cahsier: Number(req.body.id),
+      amount: parseFloat(req.body.amount),
+      oldBalance,
+      newBalance,
+    };
+    // since the transaction has been successful, push to the transaction array.
+    transactions.push(transaction);
+    res.status(201).send({
+      status: 'success', msg: 'transaction successful', account: getUserAccNum, transaction,
+    });
   }
 }
 export default staffController;

@@ -18,6 +18,7 @@ router.post('/api/v1/user/change-password/:id', userController.changePassword);
 
 // Route defined for the staffs
 router.get('/api/v1/staff/login', staffController.getStaffLogin);
-
+router.post('/api/v1/auth/staff/login', staffController.staffLogin);
+router.post('/api/v1/transaction/:accountno/credit', staffController.creditAccount);
 
 export default router;
