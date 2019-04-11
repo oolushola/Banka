@@ -308,4 +308,31 @@ describe('Staff /', () => {
         });
     });
   });
+  // delete specific account
+  describe('Delete user bank account', () => {
+    it('should not delete a user account', (done) => {
+      const accNo = 12345;
+      chai.request(app)
+        .delete(`/api/v1/accounts/${accNo}`)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should delete an account', (done) => {
+      const accNo = 1234567810;
+      chai.request(app)
+        .delete(`/api/v1/accounts/${accNo}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
