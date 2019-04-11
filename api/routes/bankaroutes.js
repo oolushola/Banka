@@ -20,5 +20,6 @@ router.post('/api/v1/user/change-password/:id', userController.changePassword);
 router.get('/api/v1/staff/login', staffController.getStaffLogin);
 router.post('/api/v1/auth/staff/login', staffController.staffLogin);
 router.post('/api/v1/transaction/:accountno/credit', staffController.creditAccount);
+router.post('/api/v1/transaction/:accountno/debit', staffController.debitAccount);
 
 export default router;
