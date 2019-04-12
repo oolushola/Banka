@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import userController from '../controllers/users-controller';
 import staffController from '../controllers/staff-controller';
-
+import adminController from '../controllers/admin-controller';
 const router = Router();
 
 router.get('/', userController.index);
@@ -27,6 +27,7 @@ router.get('/api/v1/:accountNumber/:id', staffController.getSpecificAccount); //
 
 // Route defined for the admin
 router.post('/api/v1/auth/admin/login', adminController.adminLogin);
+router.patch('/api/v1/assign/accountNo', adminController.giveAccountNumber);
 
 
 

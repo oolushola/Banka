@@ -34,6 +34,28 @@ class adminController {
     const token = jwt.sign({ id: findUser.id }, config.secret, { expiresIn: 86400 });
     return res.status(200).send({ auth: true, token, findUser });
   }
+
+  static giveAccountNumber(req, res) {
+    if (!req.body.id) return res.status(400).send({ status: 'failed', msg: 'user id is required.' });
+    if (!req.body.accountNumber) return res.status(400).send({ status: 'failed', msg: 'account number is required' });
+
+    const findUser = bankAccount.find(bankAccountDb => bankAccountDb.owner === Number(req.body.id));
+    if (!findUser) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+
+    const accountNumberAssigned = {
+      id: findUser.id,
+      accountNumber: Number(req.body.accountNumber),
+      created: findUser.created,
+      owner: findUser.owner,
+      dob: findUser.dob,
+      accountType: findUser.accountType,
+      status: findUser.status,
+      openingBalance: findUser.openingBalance,
+    };
+    bankAccount.splice(findUser.index, 0, accountNumberAssigned);
+    res.status(201).send({ status: 'success', msg: 'account number assigned', findUser });
+  }
+
 }
 
 export default adminController;
