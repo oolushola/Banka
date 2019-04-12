@@ -25,6 +25,9 @@ router.delete('/api/v1/accounts/:accountNumber', staffController.deleteAccount);
 router.get('/api/v1/users-account', staffController.allUsersAccount); // an admin will share in this route too.
 router.get('/api/v1/:accountNumber/:id', staffController.getSpecificAccount); // an admin will share this route
 
+// Route defined for the admin
+router.post('/api/v1/auth/admin/login', adminController.adminLogin);
+
 
 
 export default router;
