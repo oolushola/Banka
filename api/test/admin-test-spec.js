@@ -157,4 +157,62 @@ describe('Admin /', () => {
         });
     });
   });
+  describe('Account status', () => {
+    it('should not update account status if no account number is selected', (done) => {
+      const accountStatus = {
+        status: 'dormant',
+      };
+      chai.request(app)
+        .patch('/api/v1/activate')
+        .send(accountStatus)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+    it('should not update status of the account if no status is entered. ', (done) => {
+      const accountStatus = {
+        accountNumber: 123456,
+      };
+      chai.request(app)
+        .patch('/api/v1/activate')
+        .send(accountStatus)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+    it('should not update status of the account if account number is wrong. ', (done) => {
+      const accountStatus = {
+        accountNumber: 25469,
+        status: 'activate',
+      };
+      chai.request(app)
+        .patch('/api/v1/activate')
+        .send(accountStatus)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should update account status', (done) => {
+      const accountStatus = {
+        accountNumber: 1234567810,
+        status: 'activate',
+      };
+      chai.request(app)
+        .patch('/api/v1/activate')
+        .send(accountStatus)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
