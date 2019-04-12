@@ -215,4 +215,49 @@ describe('Admin /', () => {
         });
     });
   });
+  describe('Admin Registration /', () => {
+    it('should not register an admin/staff that already exists', (done) => {
+      const registrationDetails = {
+        type: 'client',
+        firstname: 'olushola',
+        lastname: 'odejobi',
+        email: 'odejobiolushola@gmail.com',
+        password: 'since1989',
+      };
+      chai.request(app)
+        .post('/api/v1/admin/auth/registration')
+        .send(registrationDetails)
+        .end((err, res) => {
+          res.should.have.status(409);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    // it method to register an admin or staff
+    it('should register new addmin/staff account', (done) => {
+      const registrationDetails = {
+        email: 'test@email.com',
+        password: 'password',
+        firstname: 'testfirstname',
+        lastname: 'testlastname',
+        phone_no: '12358',
+        state: '',
+        city: '',
+        occupation: '',
+        gender: '',
+        address: '',
+        type: 'admin',
+        isAdmin: true,
+      };
+      chai.request(app)
+        .post('/api/v1/admin/auth/registration')
+        .send(registrationDetails)
+        .end((err, res) => {
+          res.should.have.status(201);
+          done();
+        });
+    });
+  });
 });
