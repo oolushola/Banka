@@ -82,6 +82,39 @@ class adminController {
     res.status(201).send({ status: 'success', msg: 'Account status updated', accountStatus });
   }
 
+  static adminRegister(req, res) {
+    if (!req.body.type) return res.status(400).send({ status: 'failed', msg: 'admin type is required.' });
+    if (!req.body.firstname) return res.status(400).send({ status: 'failed', msg: 'first name is required.' });
+    if (!req.body.lastname) return res.status(400).send({ status: 'failed', msg: 'last name is required.' });
+    if (!req.body.email) return res.status(400).send({ status: 'failed', msg: 'email is required.' });
+    if (!req.body.password) return res.status(400).send({ status: 'failed', msg: 'password is required.' });
+
+    const checkUserExists = users.find(userdb => userdb.email === req.body.email);
+    if (checkUserExists) return res.status(409).send({ status: 'failed', msg: 'user already exists' });
+
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    const adminStatus = req.body.type !== 'staff';
+
+    const newAdminUser = {
+      id: users.length + 1,
+      email: req.body.email,
+      password: hashedPassword,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      phone_no: req.body.phone_no,
+      state: '',
+      city: '',
+      occupation: '',
+      gender: '',
+      address: '',
+      type: req.body.type,
+      isAdmin: adminStatus,
+      joined: new Date(),
+    };
+    users.push(newAdminUser);
+    res.status(201).send({ status: 'success', msg: 'new administrative user added.', newAdminUser });
+  }
+
 }
 
 export default adminController;
