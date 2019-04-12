@@ -92,4 +92,69 @@ describe('Admin /', () => {
         });
     });
   });
+  describe('Assign account Number', () => {
+    it('should not assign account number if a user is not selected', (done) => {
+      const assignAccount = {
+        accountNumber: 1234568678,
+      };
+      chai.request(app)
+        .patch('/api/v1/assign/accountNo')
+        .send(assignAccount)
+        .end((err, res) => {
+          res.should.has.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should not assign account number if none is entered', (done) => {
+      const assignAccount = {
+        id: 1,
+      };
+      chai.request(app)
+        .patch('/api/v1/assign/accountNo')
+        .send(assignAccount)
+        .end((err, res) => {
+          res.should.has.status(400);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should not assign account number if user does not exist', (done) => {
+      const assignAccount = {
+        id: -1,
+        accountNumber: 3045625897,
+      };
+      chai.request(app)
+        .patch('/api/v1/assign/accountNo')
+        .send(assignAccount)
+        .end((err, res) => {
+          res.should.has.status(404);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('failed');
+          done();
+        });
+    });
+    it('should assign account number', (done) => {
+      const assignAccount = {
+        id: 1,
+        accountNumber: 3045625897,
+      };
+      chai.request(app)
+        .patch('/api/v1/assign/accountNo')
+        .send(assignAccount)
+        .end((err, res) => {
+          res.should.has.status(201);
+          res.body.should.be.an('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql('success');
+          done();
+        });
+    });
+  });
 });
