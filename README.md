@@ -26,10 +26,8 @@ Banka is a light-weight core banking application that powers banking operations 
 
 #### Helpful Resource
 
-#### UI Views
-** Users ** 
-https://oolushola.github.io/Banka/
-** Staffs **
-https://oolushola.github.io/Banka/staff/
-** Admin **
-https://oolushola.github.io/Banka/admin/
+#### UI template
+
+- [Users](https://oolushola.github.io/Banka/)
+- [Staff](https://oolushola.github.io/Banka/staff/)
+- [Admin](https://oolushola.github.io/Banka/admin/)
