@@ -56,6 +56,32 @@ class adminController {
     res.status(201).send({ status: 'success', msg: 'account number assigned', findUser });
   }
 
+  static accountStatus(req, res) {
+    if (!req.body.accountNumber) return res.status(400).send({ status: 'failed', msg: 'account number is required.' });
+    if (!req.body.status) return res.status(400).send({ status: 'failed', msg: 'account status is required' });
+
+    // go and check if that account number exists in the database
+    const foundAccount = bankAccount.find(accDb => accDb.accountNumber === Number(req.body.accountNumber));
+    
+    if (!foundAccount) return res.status(404).send({ status: 'failed', msg: 'user not found' });
+
+    // let status;
+    const status = req.body.status ? 'activated' : 'deactivated';
+
+    const accountStatus = {
+      id: foundAccount.id,
+      accountNumber: foundAccount.accountNumber,
+      created: foundAccount.created,
+      owner: foundAccount.owner,
+      dob: foundAccount.dob,
+      accountType: foundAccount.accountType,
+      status,
+      openingBalance: foundAccount.openingBalance,
+    };
+    bankAccount.splice(foundAccount.index, 0, accountStatus);
+    res.status(201).send({ status: 'success', msg: 'Account status updated', accountStatus });
+  }
+
 }
 
 export default adminController;

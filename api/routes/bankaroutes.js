@@ -28,6 +28,8 @@ router.get('/api/v1/:accountNumber/:id', staffController.getSpecificAccount); //
 // Route defined for the admin
 router.post('/api/v1/auth/admin/login', adminController.adminLogin);
 router.patch('/api/v1/assign/accountNo', adminController.giveAccountNumber);
+router.patch('/api/v1/activate', adminController.accountStatus);
+
 
 
 
