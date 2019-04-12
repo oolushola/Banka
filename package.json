@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc --require @babel/register  mocha api/test/*.js --exit",
-    "start": "node api/app.js",
+    "start": "babel-node api/app.js",
     "devstart": "nodemon --exec babel-node api/app.js",
     "serve": "babel-watch api/app.js",
     "lint": "eslint",
