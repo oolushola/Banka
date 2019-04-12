@@ -4,7 +4,7 @@
 LOS-Cycle 43 Challenge.
 
 #### About
-Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money
+Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money``
 
 #### Objectives
 - User (client) can sign up.
@@ -21,6 +21,7 @@ Banka is a light-weight core banking application that powers banking operations 
 - Admin can create staff and admin user accounts.
 
 #### Endpoints
+
 
 #### Shoutouts 
 

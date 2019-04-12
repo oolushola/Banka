@@ -51,6 +51,9 @@
     "morgan": "^1.9.1",
     "nyc": "^13.3.0"
   },
+  "engines": {
+    "node": "10.15.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
