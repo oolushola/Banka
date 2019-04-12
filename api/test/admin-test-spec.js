@@ -235,7 +235,7 @@ describe('Admin /', () => {
           done();
         });
     });
-    // another it funtion should be here
+    // it method to register an admin or staff
     it('should register new addmin/staff account', (done) => {
       const registrationDetails = {
         email: 'test@email.com',
