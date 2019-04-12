@@ -29,6 +29,8 @@ router.get('/api/v1/:accountNumber/:id', staffController.getSpecificAccount); //
 router.post('/api/v1/auth/admin/login', adminController.adminLogin);
 router.patch('/api/v1/assign/accountNo', adminController.giveAccountNumber);
 router.patch('/api/v1/activate', adminController.accountStatus);
+router.patch('/api/v1/deactivate', adminController.accountStatus);
+
 
 
 
