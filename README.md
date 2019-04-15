@@ -75,6 +75,7 @@ Banka App, deployed to Heroku. Accessible via public URL [Here](https://adc-bank
 ## Endpoints
 
 `Client`
+
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
 |`POST`   | /api/v1/auth/register | Signup |  201 |
@@ -84,6 +85,7 @@ Banka App, deployed to Heroku. Accessible via public URL [Here](https://adc-bank
 |`POST`  | /api/v1/user/password-reset|  Reset Password | 200  |
 
 `Staff`
+
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
 |`GET`  | /api/v1/users-account|  View all bank account | 200  |
@@ -94,6 +96,7 @@ Banka App, deployed to Heroku. Accessible via public URL [Here](https://adc-bank
 |`DELETE`  | /api/v1/accounts/{account-number}|  Delete client account | 200  |
 
 `Admin`
+
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
 |`POST`  | /api/v1/auth/admin/login|  Login | 200  |
