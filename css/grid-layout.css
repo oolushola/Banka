@@ -3,7 +3,6 @@ Andela Developer Challenge
 Author: Odejobi Olushola D.
 Project: Banka App
 */
-
 *{
     box-sizing: border-box;
     margin:0;
@@ -16,7 +15,7 @@ Project: Banka App
     /* border:1px solid #000; */
     margin:auto;
     border-radius:5px;
-    box-shadow:2px 1px 1px #ccc;
+    box-shadow:2px 2px 2px 3px #ccc;
 }
 
 .row::after{
@@ -145,16 +144,36 @@ input[type='radio']{
   border:none;
   text-transform: uppercase;
   font-weight: bold;
-  color:#5f6468;
+  color:#fff;
   font-size:11px;
   margin:10px 0px;
   width:100%;
+  background-color: #FDC20E;
 }
 .btn:hover{
   border-radius: 5px;
   color: #fefefe;
   background:#FDC20E
 }
+
+.btn-action-primary{
+    padding:5px;
+    display: inline-block;
+    width:80px;
+    background-color: #30a5ff;
+  }
+  .btn-action-secondary{
+    padding:5px;
+    display: inline-block;
+    width:80px;
+    background-color: #FDC20E;
+  }
+  .btn-action-danger{
+    padding:5px;
+    display: inline-block;
+    width:80px;
+    background-color: #F9243F;
+  }
 
 input[type="checkbox"]{
     margin-left:10px;
@@ -174,6 +193,9 @@ input[type="checkbox"]{
 }
 .mt16{
     margin-top:16px;
+}
+.mt50{
+    margin-top:50px;
 }
 
 

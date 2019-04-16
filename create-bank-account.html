@@ -28,19 +28,18 @@
             <div id="menucontainer_img">
                 <img src="images/image-placeholder.jpg" class="img">
             </div>
+            <p class="center" style="font-size:12px; color:red; padding-top:10px;"><a href="upload-photo.html" style="color:red">Upload Photo</a></p>
             <h1 class="center">Olushola Odejobi</h1>
 
             <ul class="menu">
                 <li><a href="user-profile.html">Dashboard</a></li>
                 <li><a href="update-profile.html">Update Profile</a></li>
-                <li><a href="upload-photo.html">Upload Profile photo</a></li>
                 <li><a href="change-password.html">Change Password </a></li>
                 <li><a href="create-bank-account.html">Create Bank Account</a></li>
-                <li><a href="transaction-history.html">Transaction History</a></li>
-                <li>Logout</li>
             </ul>
 
         </aside>
+
         <aside class="col-7 col-9-tab">
             <h1 id="page_title">Create Bank Account</h1>
             <div id="errorMessage"></div>
@@ -69,7 +68,7 @@
                 <div class="col-6 p15">
                     <div class="formGroup">
                         <label for="email" class="formGroup_label">Email</label>
-                        <input class="inputBx nb" disabled placeholder="johndoe@ogabanka.com" id="email" name="email">
+                        <input class="inputBx" placeholder="johndoe@ogabanka.com" id="email" name="email">
                     </div>
                 </div>
 
@@ -94,6 +93,8 @@
                                 <span class="radio_title">Savings Account</span>
                             <input type="radio" class="p6 accounttype" name="accounttype" value="current account">
                                 <span class="radio_title">Current Account</span>
+                            <input type="radio" class="p6 accounttype" name="accounttype" value="Fixed deposit account">
+                                <span class="radio_title">Fixed Deposit Account</span>
 
                                 <input type="hidden" name="account_type" id="account_type">
                         </div>
@@ -101,7 +102,7 @@
                 </form>
                 
                 <div class="col-4 p15">
-                    <button type="submit" class="btn" id="createBankAccount">Create Bank Account</button>
+                    <button type="submit" class="btn mt16" id="createBankAccount">Create Bank Account</button>
                 </div>
             </div>
     
