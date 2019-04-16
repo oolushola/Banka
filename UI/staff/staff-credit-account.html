@@ -24,7 +24,7 @@
     </div>
 
     <div class="row">
-        <aside class="col-2 col-3-tab menucontainer">
+    <aside class="col-2 col-3-tab menucontainer">
             <div id="menucontainer_img">
                 <img src="../images/image-placeholder.jpg" class="img">
             </div>
@@ -33,15 +33,17 @@
             <ul class="menu">
                 <li><a href="staff-dashboard.html">Dashboard</a></li>
                 <li><a href="staff-view-user-account.html">View Account List</a></li>
-                <li><a href="staff-credit-account.html">Credit Account</a></li>
-                <li><a href="staff-debit-account.html">Debit Bank Account</a></li>
+                <li><a href="staff-credit-account.html">Perform Transaction</a></li>
+                <!-- <li><a href="staff-debit-account.html">Debit Bank Account</a></li>
                 <li><a href="staff-suspend-account.html">Delete Customer Account</a></li>
-                <li>Logout</li>
+                <li>Logout</li> -->
             </ul>
+
         </aside>
+        
 
         <aside class="col-7 col-9-tab">
-            <h1 id="page_title">Credit an Account</h1>
+            <h1 id="page_title">Transact Operation</h1>
             <div id="errorMessage"></div>
             <form method="POST" action="">
                 <div class="col-12 p15">
@@ -55,12 +57,31 @@
                     </div>
                     <div class="formGroup">
                         <label for="amount" class="formGroup_label">Amount*</label>
-                        <input type="text" class="inputBx" placeholder="10,000.000.00" id="amount" name="amount">
+                        <input type="number" class="inputBx" placeholder="10,000.000.00" id="amount" name="amount">
                     </div>
                 </div>
 
+                <div class="col-12 p15" >
+                    <div class="formGroup">
+                        <label for="account_type" class="formGroup_label">Transaction Type*</label>
+                        <input type="radio" class="p6 transType" name="transType" value="credit">
+                            <span class="radio_title">Credit</span>
+                        <input type="radio" class="p6 transType" name="transType" value="debit">
+                            <span class="radio_title">Debit</span>
+                        
+                            <input type="hidden" name="transactionType" id="transactionType">
+                    </div>
+                </div>
+                <div class="col-12 p15">
+                    <div class="formGroup">
+                        <label for="photo" class="formGroup_label">Confirm Transaction*</label>
+                        <input type="checkbox" name="suspend" id="suspend" ><span id="tandc"> You have to check to confirm if the transaction is appropriate.</span>
+                    </div>
+                </div>
+                
+
                 <div class="col-4 p15">
-                    <button type="submit" class="btn" id="creditAccount">Credit Account</button>
+                    <button type="submit" class="btn mt50" id="creditAccount">Send Transaction</button>
                 </div>
             </form>
         </aside>

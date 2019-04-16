@@ -27,10 +27,10 @@ describe('Users /', () => {
         .post('/api/v1/auth/register')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(422);
           res.body.should.be.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(422);
           done();
         });
     });
@@ -45,10 +45,11 @@ describe('Users /', () => {
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(201);
           res.body.should.have.property('auth');
           res.body.auth.should.be.eql(true);
           res.body.should.have.property('token');
-
           done();
         });
     });
@@ -61,13 +62,13 @@ describe('Users /', () => {
         password: 'secret',
       };
       chai.request(app)
-        .post('/api/v1/auth/user-login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(404);
           done();
         });
     });
@@ -77,12 +78,12 @@ describe('Users /', () => {
         password: 'since1989',
       };
       chai.request(app)
-        .post('/api/v1/auth/user-login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('token');
-          res.body.should.have.property('userFound');
+          res.body.should.have.property('email');
           res.body.should.have.property('auth');
           res.body.auth.should.be.eql(true);
           done();
@@ -94,10 +95,12 @@ describe('Users /', () => {
         password: 'secret',
       };
       chai.request(app)
-        .post('/api/v1/auth/user-login')
+        .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(422);
+          res.body.should.have.property('status');
+          res.body.auth.should.eql(422);
           res.body.should.have.property('auth');
           res.body.auth.should.eql('false');
           done();
@@ -117,9 +120,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(400);
+          res.should.have.status(422);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(422);
           done();
         });
     });
@@ -135,9 +138,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(400);
+          res.should.have.status(422);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(422);
           done();
         });
     });
@@ -154,9 +157,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(400);
+          res.should.have.status(422);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(422);
           done();
         });
     });
@@ -173,9 +176,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(400);
+          res.should.have.status(404);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(404);
           done();
         });
     });
@@ -195,7 +198,7 @@ describe('Users /', () => {
           res.should.be.a('object');
           res.should.have.status(201);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql('success');
+          res.body.status.should.be.eql(201);
           done();
         });
     });
