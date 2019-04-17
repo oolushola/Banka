@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../staff/stylesheets/staff-style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
@@ -27,21 +28,19 @@
             <div id="menucontainer_img">
                 <img src="../images/image-placeholder.jpg" class="img">
             </div>
-            <p class="center" style="font-size:12px; color:red; padding-top:10px;"><a href="../upload-photo.html" style="color:red">Upload Photo</a></p>
             <h1 class="center">Akerele H.B.</h1>
 
             <ul class="menu">
                 <li><a href="admin-profile.html">Dashboard</a></li>
                 <li><a href="admin-generate-account-number.html">Generate Account No.</a></li>
-                <li><a href="admin-view-clients-account.html">View Customers Account</a></li>
+                <!-- <li><a href="admin-view-clients-account.html">View Customers Account</a></li> -->
                 <li><a href="admin-create-administrative-account.html">Create an Administrative Account</a></li>
-                <li>Logout</li>
             </ul>
 
         </aside>
         <aside class="col-7 col-9-tab">
             <h1 id="page_title">Dashboard</h1>
-            <div class="row">
+            <!-- <div class="row">
                 
                     <div class="col-4">
                         <ul class="row">
@@ -68,58 +67,151 @@
                         </a>
                     </ul>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-12">
                     <div>
                         <table width="100%" border="0">
                                 <th>
-                                    
                                     <tr>
-                                        <td width="5%" class="subheading center">S/N</td>
-                                        <td width="25%" class="subheading ">Client's Information</td>
-                                        <td width="10%" class="subheading center">Joined</td>
-                                        <td width="10%" class="subheading center">Account Type</td>
-                                        <td width="12%" class="subheading center">Account Status</td>
-                                        <td width="8%" class="subheading ">Balance(&#x20A6;)</td>
-                                        <td width="30%" class="subheading center">Action</td>
+                                        <td class="roweven filter" colspan="7">
+                                            <form method="POST" action="">
+                                                <ul class="row">
+                                                    <li class="col-5">
+                                                        <label>Filter</label>
+                                                        <select class="inputBx p6"  id="date_from" name="date_from">
+                                                            <option value="0">Choose</option>
+                                                            <optgroup label="Account Status">
+                                                                <option value="active">Active</option>
+                                                                <option value="dormant">Dormant</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="subheading center">S/N</td>
+                                        <td class="subheading ">Client's Information</td>
+                                        <td class="subheading center">Joined</td>
+                                        <td class="subheading center">Account Type</td>
+                                        <td class="subheading center">Account Status</td>
+                                        <td class="subheading ">Balance(&#x20A6;)</td>
+                                        <td class="subheading center">Action</td>
                                     </tr>
                                 </th>
                                 <tbody>
-                                    <tr>
-                                        <td class="rowodd center">1</td>
-                                        <td class="rowodd ">Odejobi Olushola - 1122334455</td>
-                                        <td class="rowodd center">16/04/2019. </td>
-                                        <td class="rowodd center">Savings</td>
-                                        <td class="rowodd center">Activated</td>  
-                                        <td class="rowodd">1,000,000.00</td> 
-                                        <td class="rowodd center">
-                                            <button class="btn btn-action-primary">Activate</button>
-                                            <button class="btn btn-action-secondary">Deactivate</button>
-                                            <button class="btn btn-action-danger">Delete</button>
-                                            <button class="btn btn-action-primary"><a href="view-single-user-account.html">View</a></button>
-                                        </td>   
-                                    </tr>
-                                    <tr>
-                                        <td class="roweven center">2</td>
-                                        <td class="roweven ">Obanla Niniola</td>
-                                        <td class="roweven center">16/04/2019</td>
-                                        <td class="roweven">Debit</td>
-                                        <td class="roweven">Dormant</td> 
-                                        <td class="roweven">1,000,000.00</td> 
-                                        <td class="roweven center">
-                                            <button class="btn btn-action-primary">Activate</button>
-                                            <button class="btn btn-action-secondary">Deactivate</button>
-                                            <button class="btn btn-action-danger">Delete</button>
-                                            <button class="btn btn-action-primary"><a href="view-single-user-account.html">View</a></button>
-                                        </td> 
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="subheading">Total Number of Customers: 2</td>
-                                    </tr>
-        
+                                        <tr>
+                                            <td class="rowodd center">1</td>
+                                            <td class="rowodd ">Odejobi Olushola - 1122334455</td>
+                                            <td class="rowodd center">16/04/2019. </td>
+                                            <td class="rowodd center">Savings</td>
+                                            <td class="rowodd">Active</td>  
+                                            <td class="rowodd">1,000,000.00</td> 
+                                            <td class="rowodd center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"><a href="view-single-user-account.html"></a></i>
+                                                <i class="fa fa-times icons" style="font-size:18px;" title="Deactivate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="roweven center">2</td>
+                                            <td class="roweven ">Odejobi Olushola - 2233445566</td>
+                                            <td class="roweven center">16/04/2019. </td>
+                                            <td class="roweven center">Savings</td>
+                                            <td class="roweven">Dormant</td>  
+                                            <td class="roweven">1,000,000.00</td> 
+                                            <td class="roweven center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"></i>
+                                                <i class="icons fa fa-check" style="font-size:18px;" title="Activate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="rowodd center">3</td>
+                                            <td class="rowodd ">Odejobi Olushola - 1122334455</td>
+                                            <td class="rowodd center">16/04/2019. </td>
+                                            <td class="rowodd center">Savings</td>
+                                            <td class="rowodd">Active</td>  
+                                            <td class="rowodd">1,000,000.00</td> 
+                                            <td class="rowodd center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"><a href="view-single-user-account.html"></a></i>
+                                                <i class="fa fa-times icons" style="font-size:18px;" title="Deactivate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="roweven center">4</td>
+                                            <td class="roweven ">Odejobi Olushola - 2233445566</td>
+                                            <td class="roweven center">16/04/2019. </td>
+                                            <td class="roweven center">Savings</td>
+                                            <td class="roweven">Dormant</td>  
+                                            <td class="roweven">1,000,000.00</td> 
+                                            <td class="roweven center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"></i>
+                                                <i class="icons fa fa-check" style="font-size:18px;" title="Activate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="rowodd center">5</td>
+                                            <td class="rowodd ">Odejobi Olushola - 1122334455</td>
+                                            <td class="rowodd center">16/04/2019. </td>
+                                            <td class="rowodd center">Savings</td>
+                                            <td class="rowodd">Active</td>  
+                                            <td class="rowodd">1,000,000.00</td> 
+                                            <td class="rowodd center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"><a href="view-single-user-account.html"></a></i>
+                                                <i class="fa fa-times icons" style="font-size:18px;" title="Deactivate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="roweven center">6</td>
+                                            <td class="roweven ">Odejobi Olushola - 2233445566</td>
+                                            <td class="roweven center">16/04/2019. </td>
+                                            <td class="roweven center">Savings</td>
+                                            <td class="roweven">Dormant</td>  
+                                            <td class="roweven">1,000,000.00</td> 
+                                            <td class="roweven center">
+                                                    <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"></i>
+                                                    <i class="icons fa fa-check" style="font-size:18px;" title="Activate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="rowodd center">7</td>
+                                            <td class="rowodd ">Odejobi Olushola - 1122334455</td>
+                                            <td class="rowodd center">16/04/2019. </td>
+                                            <td class="rowodd center">Savings</td>
+                                            <td class="rowodd">Active</td>  
+                                            <td class="rowodd">1,000,000.00</td> 
+                                            <td class="rowodd center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"><a href="view-single-user-account.html"></a></i>
+                                                <i class="fa fa-times icons" style="font-size:18px;" title="Deactivate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td class="roweven center">8</td>
+                                            <td class="roweven ">Odejobi Olushola - 2233445566</td>
+                                            <td class="roweven center">16/04/2019. </td>
+                                            <td class="roweven center">Savings</td>
+                                            <td class="roweven">Active</td>  
+                                            <td class="roweven">1,000,000.00</td> 
+                                            <td class="roweven center">
+                                                <i class="fa fa-eye icons" style="font-size:18px;" title="View Account Information"></i>
+                                                <i class="icons fa fa-times" style="font-size:18px;" title="Activate"></i>
+                                                <i class="fa fa-trash icons" style="font-size:18px;" title="Delete Account"></i>
+                                            </td>   
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="subheading">Total Number of Customers: 8</td>
+                                        </tr>
+            
                                 </tbody>
-                        </table>
+                        </table>            
                     </div>
                 </div>
             </div>
