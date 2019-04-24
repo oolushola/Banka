@@ -1,13 +1,10 @@
-// Import the dependencies for testing
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 
-// configure chai
 chai.use(chaiHttp);
 chai.should();
 
-// Test suite for the staff
 describe('Staff /', () => {
   describe('Login', () => {
     it('should not login a staff without email', (done) => {
@@ -19,10 +16,29 @@ describe('Staff /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
+          res.should.have.status(422);
+          res.body.should.have.property('status');
+          res.body.should.have.property('msg');
+          res.body.status.should.be.eql(422);
+          res.body.msg.should.be.eql('email is required');
+          done();
+        });
+    });
+    it('should not login a staff without a valid email format', (done) => {
+      const staff = {
+        email: 'emailme',
+        password: 'testPassword',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/staff/login')
+        .send(staff)
+        .end((err, res) => {
+          res.should.be.an('object');
           res.should.have.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(400);
+          res.body.msg.should.be.eql('invalid email');
           done();
         });
     });
@@ -35,10 +51,11 @@ describe('Staff /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
-          res.should.have.status(400);
+          res.should.have.status(422);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.status.should.be.eql(422);
+          res.body.msg.should.be.eql('password is required');
           done();
         });
     });
@@ -54,32 +71,58 @@ describe('Staff /', () => {
           res.should.be.an('object');
           res.should.have.status(404);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(404);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.msg.should.be.eql('user not found');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
           done();
         });
     });
     it('should not authorize user that exists, but not a staff', (done) => {
       const staff = {
-        email: 'odejobiolushola@gmail.com',
-        password: 'likemike009',
-        type: 'notAstaff',
+        email: 'dj_ajax02@gmail.com',
+        password: 'since1989',
       };
       chai.request(app)
         .post('/api/v1/auth/staff/login')
         .send(staff)
         .end((err, res) => {
-          res.should.has.status(404);
+          res.should.be.an('object');
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('unauthorized');
+          res.body.msg.should.be.eql('unauthorized');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
+          done();
+        });
+    });
+    it('should not login a user without the right credentials ', (done) => {
+      const staff = {
+        email: 'odejobiolushola@yahoo.com',
+        password: 'wrongpassword',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/staff/login')
+        .send(staff)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('token');
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('invalid login');
           done();
         });
     });
     it('should login a user with the right credentials ', (done) => {
       const staff = {
-        email: 'ajax_02@gmail.com',
+        email: 'odejobiolushola@yahoo.com',
         password: 'since1989',
-        type: 'staff',
       };
       chai.request(app)
         .post('/api/v1/auth/staff/login')
@@ -89,248 +132,337 @@ describe('Staff /', () => {
           res.body.should.have.property('token');
           res.body.should.have.property('auth');
           res.body.auth.should.be.eql(true);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('login successful');
           done();
         });
     });
   });
 
-  // credit user
-  describe('Credit User Account /', () => {
-    it('should not credit an account without an account number', (done) => {
-      const accno = 14587;
+  describe('Perform Transaction on User Account /', () => {
+    const validateStaff = {
+      email: 'odejobiolushola@yahoo.com',
+      password: 'since1989',
+    };
+    let staffToken;
+    before((done) => {
+      chai.request(app)
+        .post('/api/v1/auth/staff/login')
+        .send(validateStaff)
+        .end((err, res) => {
+          staffToken = res.body.token;
+          done();
+        });
+    });
+    it('it should not perform transaction without account number', (done) => {
+      const accountNumber = '1234560001';
       const transaction = {
-        type: 'credit',
+        trasactionType: 'credit',
         amount: 10000,
       };
       chai.request(app)
-        .post(`/api/v1/transaction/${accno}/credit`)
+        .post(`/api/v1/transactions/${accountNumber}`)
         .send(transaction)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(422);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(422);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.msg.should.be.eql('account number is require');
           done();
         });
     });
-
-    it('should not credit an account without an amount ', (done) => {
+    it('it should not authorize staff without a token', (done) => {
       const transaction = {
-        accountNumber: 125786,
+        transactionType: 'credit',
+        amount: 10000,
+        accountNumber: '1234560001',
+        confirmation: 1,
       };
       chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
+        .post(`/api/v1/transactions/${transaction.accountNumber}`)
+        .set('x-access-token', '')
         .send(transaction)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.msg.should.be.eql('no token');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
           done();
         });
     });
-
-    it('should not credit an account thats not found ', (done) => {
+    it('it should not authorize staff with an unverifiable token', (done) => {
       const transaction = {
-        accountNumber: 125786,
-        amount: 2000,
+        transactionType: 'credit',
+        amount: 10000,
+        accountNumber: '1234560001',
+        confirmation: 1,
       };
       chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
+        .post(`/api/v1/transactions/${transaction.accountNumber}`)
+        .set('x-access-token', `${staffToken}jsjkalls254`)
         .send(transaction)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
-          done();
-        });
-    });
-
-    it('should credit a valid registered account', (done) => {
-      const transaction = {
-        accountNumber: 1234567810,
-        amount: 2000,
-      };
-      chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/credit`)
-        .send(transaction)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
+          res.body.msg.should.be.eql('unverifiable token');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
           done();
         });
     });
   });
 
-  // Debit user account
-  describe('Debit User Account /', () => {
-    it('should not debit an account without an account number', (done) => {
-      const accno = 14587;
-      const transaction = {
-        amount: 3000,
-      };
+  describe('All users bank account ', () => {
+    const validateStaff = {
+      email: 'odejobiolushola@yahoo.com',
+      password: 'since1989',
+    };
+    let staffToken;
+    before((done) => {
       chai.request(app)
-        .post(`/api/v1/transaction/${accno}/debit`)
-        .send(transaction)
+        .post('/api/v1/auth/staff/login')
+        .send(validateStaff)
         .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          staffToken = res.body.token;
           done();
         });
     });
-
-    it('should not debit an account without an amount ', (done) => {
-      const transaction = {
-        accountNumber: 125786,
-      };
+    it('should not display user account if no token', (done) => {
       chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
-        .send(transaction)
+        .get('/api/v1/accounts')
+        .set('x-access-token', '')
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.msg.should.be.eql('no token');
           done();
         });
     });
-
-    it('should not debit an account thats not found ', (done) => {
-      const transaction = {
-        accountNumber: 125786,
-        amount: 2000,
-      };
+    it('should not display user account if token is unverifiable', (done) => {
       chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
-        .send(transaction)
+        .get('/api/v1/accounts')
+        .set('x-access-token', `${staffToken}kdkjdkd8dsh`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          res.body.msg.should.be.eql('unverifiable token');
           done();
         });
     });
-
-    it('should not debit  account, if old balance is < the amount  to debit', (done) => {
-      const transaction = {
-        accountNumber: 1234567810,
-        amount: 1500000000,
-      };
+    it('should get all users account', (done) => {
       chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
-        .send(transaction)
-        .end((err, res) => {
-          res.should.have.status(403);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
-          done();
-        });
-    });
-    
-    it('should debit a valid registered account', (done) => {
-      const transaction = {
-        accountNumber: 1234567810,
-        amount: 500,
-      };
-      chai.request(app)
-        .post(`/api/v1/transaction/${transaction.accountNumber}/debit`)
-        .send(transaction)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
-          done();
-        });
-    });
-  });
-
-  // users account
-  describe('All users account ', () => {
-    it('should not display any account, if no one has registered', (done) => {
-      const accounts = 0;
-      chai.request(app)
-        .get('/api/v1/users-account')
+        .get('/api/v1/accounts')
+        .set('x-access-token', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
-          done();
-        });
-    });
-    it('should display all users account', (done) => {
-      chai.request(app)
-        .get('/api/v1/users-account')
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
+          res.body.status.should.be.eql(200);
+          res.body.should.have.property('data');
           done();
         });
     });
   });
-  // single account
+
   describe('View specific user', () => {
-    it('should not display the user profile of a wrong account ', (done) => {
-      const accNo = 12458;
-      const owner = -1;
+    const validateStaff = {
+      email: 'odejobiolushola@yahoo.com',
+      password: 'since1989',
+    };
+    let staffToken;
+    before((done) => {
       chai.request(app)
-        .get(`/api/v1/${accNo}/${owner}`)
+        .post('/api/v1/auth/staff/login')
+        .send(validateStaff)
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          staffToken = res.body.token;
           done();
         });
     });
-    it('should display single bank account profile', (done) => {
-      const accNum = 1234567810;
-      const id = 1;
+    it('should not display a specific user account if no token', (done) => {
+      const accountNumber = '123456789';
       chai.request(app)
-        .get(`/api/v1/${accNum}/${id}`)
-        .end((end, res) => {
-          res.should.have.status(200);
-          res.body.should.be.an('object');
+        .get(`/api/v1/${accountNumber}`)
+        .set('x-access-token', '')
+        .end((err, res) => {
+          res.should.have.status(401);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
+          res.body.msg.should.be.eql('no token');
+          done();
+        });
+    });
+    it('should not display user account if token is unverifiable', (done) => {
+      const accountNumber = '1234560001';
+      chai.request(app)
+        .get(`/api/v1/${accountNumber}`)
+        .set('x-access-token', `${staffToken}kdkjdkd8dsh`)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('unverifiable token');
+          done();
+        });
+    });
+    it('should not display an account number that does not exists', (done) => {
+      const accountNumber = '25566447788';
+      chai.request(app)
+        .get(`/api/v1/${accountNumber}`)
+        .set('x-access-token', staffToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(404);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('user not found');
+          done();
+        });
+    });
+    it('should not get an account number that exists', (done) => {
+      const accountNumber = '1234560001';
+      chai.request(app)
+        .get(`/api/v1/${accountNumber}`)
+        .set('x-access-token', staffToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(200);
+          res.body.should.have.property('userInfo');
+          res.body.should.have.property('transactionInfo');
           done();
         });
     });
   });
-  // delete specific account
-  describe('Delete user bank account', () => {
-    it('should not delete a user account', (done) => {
-      const accNo = 12345;
+
+  describe('Get all lists of accounts by status', () => {
+    const validateStaff = {
+      email: 'odejobiolushola@yahoo.com',
+      password: 'since1989',
+    };
+    let staffToken;
+    before((done) => {
       chai.request(app)
-        .delete(`/api/v1/accounts/${accNo}`)
+        .post('/api/v1/auth/staff/login')
+        .send(validateStaff)
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property('status');
-          res.body.should.have.property('msg');
-          res.body.status.should.be.eql('failed');
+          staffToken = res.body.token;
           done();
         });
     });
-    it('should delete an account', (done) => {
-      const accNo = 1234567810;
+    it('should not list accounts by status if there is no token', (done) => {
+      const status = 'active';
       chai.request(app)
-        .delete(`/api/v1/accounts/${accNo}`)
+        .get(`/accounts/&&status=${status}`)
+        .set('x-access-token', '')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('no token');
+          done();
+        });
+    });
+    it('should not display users account by status if token is unverifiable', (done) => {
+      const status = 'dormant';
+      chai.request(app)
+        .get(`/accounts/&&status=${status}`)
+        .set('x-access-token', `${staffToken}vsgjskjs.yeu`)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('unverifiable token');
+          done();
+        });
+    });
+    it('should return the list of all accounts ', (done) => {
+      const status = 'dormant';
+      chai.request(app)
+        .get(`/accounts/&&status=${status}`)
+        .set('x-access-token', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
+          res.body.status.should.be.eql(200);
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+
+  describe('Delete user bank account', () => {
+    const validateStaff = {
+      email: 'odejobiolushola@yahoo.com',
+      password: 'since1989',
+    };
+
+    let staffToken;
+    before((done) => {
+      chai.request(app)
+        .post('/api/v1/auth/staff/login')
+        .send(validateStaff)
+        .end((err, res) => {
+          staffToken = res.body.token;
+          done();
+        });
+    });
+    it('should not delete a user account if no token', (done) => {
+      const accountNumber = '1234560001';
+      chai.request(app)
+        .delete(`/api/v1/accounts/${accountNumber}`)
+        .set('x-access-token', '')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql('success');
+          res.body.msg.should.be.eql('no token');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
+          done();
+        });
+    });
+    it('should not delete user account if token is unverifiable', (done) => {
+      const accountNumber = '1234560001';
+      chai.request(app)
+        .delete(`/api/v1/accounts/${accountNumber}`)
+        .set('x-access-token', `${staffToken}blsjd.hdjs`)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(401);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('unverifiable token');
+          res.body.should.have.property('auth');
+          res.body.auth.should.be.eql(false);
+          done();
+        });
+    });
+    it('should should delete user account', (done) => {
+      const accountNumber = '1234560001';
+      chai.request(app)
+        .delete(`/api/v1/accounts/${accountNumber}`)
+        .set('x-access-token', staffToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status');
+          res.body.status.should.be.eql(200);
+          res.body.should.have.property('msg');
+          res.body.msg.should.be.eql('account deleted');
           done();
         });
     });

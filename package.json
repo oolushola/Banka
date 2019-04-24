@@ -4,12 +4,15 @@
   "description": "ADC-LOS43: Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals.",
   "main": "app.js",
   "scripts": {
+    "create": "babel-node api/database/create-tables",
+    "drop": "babel-node api/database/droptables",
     "test": "cross-env NODE_ENV=test nyc --require @babel/register  mocha api/test/*.js --exit",
     "start": "babel-node api/app.js",
     "devstart": "nodemon --exec babel-node api/app.js",
     "serve": "babel-watch api/app.js",
     "lint": "eslint",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test-db": "npm run drop && npm run create && cross-env NODE_ENV=test nyc --require @babel/register  mocha api/test/*.js --exit"
   },
   "nyc": {
     "require": [
@@ -32,15 +35,15 @@
   },
   "homepage": "https://github.com/oolushola/banka#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "@babel/register": "^7.4.0",
-    "@babel/runtime": "^7.4.3",
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/plugin-transform-regenerator": "^7.4.3",
     "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "@babel/runtime": "^7.4.3",
     "babel-watch": "^7.0.0",
     "bcrypt": "^3.0.5",
     "bcrypt-nodejs": "0.0.3",
@@ -56,7 +59,8 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.0.2",
     "morgan": "^1.9.1",
-    "nyc": "^13.3.0"
+    "nyc": "^13.3.0",
+    "pg": "^7.10.0"
   },
   "engines": {
     "node": "10.15.1"

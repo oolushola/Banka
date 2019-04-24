@@ -48,7 +48,7 @@ const validateClientSignUp = ()=> {
 
     let tandc = document.getElementById('tandc').checked;
         if(tandc===false){
-            errormessageHolder.textContent = 'You have to accept ogaBanka Terms and Conditions.';
+            errormessageHolder.textContent = 'You have to accept Banka Terms and Conditions.';
             errormessageHolder.className = 'errorMessage';  
             return false;
         }

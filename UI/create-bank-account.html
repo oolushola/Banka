@@ -28,19 +28,18 @@
             <div id="menucontainer_img">
                 <img src="images/image-placeholder.jpg" class="img">
             </div>
+            <p class="center misc_two"><a href="upload-photo.html" class="uploadPhoto">Upload Photo</a></p>
             <h1 class="center">Olushola Odejobi</h1>
 
             <ul class="menu">
                 <li><a href="user-profile.html">Dashboard</a></li>
                 <li><a href="update-profile.html">Update Profile</a></li>
-                <li><a href="upload-photo.html">Upload Profile photo</a></li>
-                <li><a href="change-password.html">Change Password </a></li>
                 <li><a href="create-bank-account.html">Create Bank Account</a></li>
-                <li><a href="transaction-history.html">Transaction History</a></li>
-                <li>Logout</li>
+                <li><a href="change-password.html">Change Password </a></li>
             </ul>
 
         </aside>
+
         <aside class="col-7 col-9-tab">
             <h1 id="page_title">Create Bank Account</h1>
             <div id="errorMessage"></div>
@@ -58,27 +57,25 @@
                         <input class="inputBx nb" disabled placeholder="Smith" id="last_name" name="last_name">
                     </div>
                 </div>
-
-                <div class="col-6 p15">
-                    <div class="formGroup">
-                        <label for="phone_no"  class="formGroup_label">Phone No</label>
-                        <input class="inputBx nb" disabled placeholder="+234802244****" id="phone_no" name="phone_no">
-                    </div>
-                </div>
-
-                <div class="col-6 p15">
-                    <div class="formGroup">
-                        <label for="email" class="formGroup_label">Email</label>
-                        <input class="inputBx nb" disabled placeholder="johndoe@ogabanka.com" id="email" name="email">
-                    </div>
-                </div>
-
                 <div class="col-6 p15">
                     <div class="formGroup">
                         <label for="phone_no"  class="formGroup_label">Gender</label>
                         <input class="inputBx nb" disabled placeholder="female" id="gender" name="gender">
                     </div>
                 </div>
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="email" class="formGroup_label">Email</label>
+                        <input class="inputBx" placeholder="johndoe@ogabanka.com" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-6 p15">
+                    <div class="formGroup">
+                        <label for="phone_no"  class="formGroup_label">Phone No</label>
+                        <input class="inputBx" type="number" placeholder="+234802244****" id="phone_no" name="phone_no">
+                    </div>
+                </div>
+
                 <form method="POST" action="">
                     <div class="col-6 p15">
                         <div class="formGroup">
@@ -87,21 +84,32 @@
                         </div>
                     </div>
                 
-                    <div class="col-12 p15" >
+                    <div class="col-6 p15" style="margin-top: 10px; clear:both" >
                         <div class="formGroup">
                             <label for="account_type" class="formGroup_label">Account Type*</label>
                             <input type="radio" class="p6 accounttype" name="accounttype" value="savings account">
-                                <span class="radio_title">Savings Account</span>
+                                <span class="radio_title">Savings</span>
                             <input type="radio" class="p6 accounttype" name="accounttype" value="current account">
-                                <span class="radio_title">Current Account</span>
+                                <span class="radio_title">Current</span>
+                            <input type="radio" class="p6 accounttype" name="accounttype" value="Fixed deposit account">
+                                <span class="radio_title">Fixed Deposit</span>
 
                                 <input type="hidden" name="account_type" id="account_type">
                         </div>
                     </div>
+
+                    <div class="col-6 p15">
+                        <div class="formGroup">
+                            <label for="opening-balance" class="formGroup_label">Opening Balance*</label>
+                            <input type="number" class="inputBx" placeholder="10,000.00" id="balance" name="balance">
+                        </div>
+                    </div>
+
+                    
                 </form>
                 
                 <div class="col-4 p15">
-                    <button type="submit" class="btn" id="createBankAccount">Create Bank Account</button>
+                    <button type="submit" class="btn mt16" id="createBankAccount">Create Bank Account</button>
                 </div>
             </div>
     

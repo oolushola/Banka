@@ -27,16 +27,14 @@
             <div id="menucontainer_img">
                 <img src="images/image-placeholder.jpg" class="img">
             </div>
+            <p class="center misc_two"><a href="upload-photo.html" class="uploadPhoto">Upload Photo</a></p>
             <h1 class="center">Olushola Odejobi</h1>
 
             <ul class="menu">
                 <li><a href="user-profile.html">Dashboard</a></li>
                 <li><a href="update-profile.html">Update Profile</a></li>
-                <li><a href="upload-photo.html">Upload Profile photo</a></li>
-                <li><a href="change-password.html">Change Password </a></li>
                 <li><a href="create-bank-account.html">Create Bank Account</a></li>
-                <li><a href="transaction-history.html">Transaction History</a></li>
-                <li>Logout</li>
+                <li><a href="change-password.html">Change Password </a></li>
             </ul>
 
         </aside>
@@ -51,13 +49,13 @@
                 </div>
                 <div class="col-4">
                         <ul class="row">
-                            <li class="col-7 dashboardModuleName account-module-color">Account </li>
+                            <li class="col-7 dashboardModuleName">Account Type </li>
                             <li class="col-5 dashboardModuleValue">Current</li>
                         </ul>
                     </div>
                 <div class="col-4">
                     <ul class="row" >
-                        <li class="col-7 dashboardModuleName account-status-color">Status </li>
+                        <li class="col-7 dashboardModuleName">Status </li>
                         <li class="col-5 dashboardModuleValue">Active</li>
                     </ul>
                 </div>
@@ -65,49 +63,47 @@
             <div class="row">
                 <div class="col-12">
                     <div>
-                        <table width="100%" border="0">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
                             <th>
                                 <tr>
-                                    <td colspan="6" class="rowodd">Transaction History</td>
+                                    <td class="roweven filter" colspan="6">
+                                        <form method="POST" action="">
+                                            <ul class="row">
+                                                <li class="col-5">
+                                                    <label>From:</label>
+                                                    <input type="date" class="inputBx p6"  id="date_from" name="date_from">
+                                                </li>
+                                                <li class="col-5">
+                                                    <label>To:</label>
+                                                    <input type="date" class="inputBx p6" id="date_to" name="date_to">
+                                                </li>
+                                                <li class="col-2">
+                                                    <button class="btn mt16" id="filterTransHistory">Filter</button>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="subheading center">S/N</td>
                                     <td class="subheading center">Date of Transaction</td>
-                                    <td class="subheading">Debit</td>
-                                    <td class="subheading">Credit</td>
+                                    <td class="subheading">Transaction</td>
                                     <td class="subheading center">Amount (&#x20A6;)</td>
-                                    <td class="subheading center">Transaction</td>
+                                    <td class="subheading center">Action</td>
                                 </tr>
                             </th>
                             <tbody>
                                 <tr>
                                     <td class="rowodd center">1</td>
                                     <td class="rowodd center">20th of March, 2019.</td>
-                                    <td class="rowodd">Yes </td>
                                     <td class="rowodd">No </td>
                                     <td class="rowodd center">10,000.00</td>
-                                    <td class="rowodd center">view</td>   
+                                    <td class="rowodd center"><a href="specific-account-details.html">view</a></td>   
                                 </tr>
+                                
                                 <tr>
                                         <td class="roweven center">2</td>
                                         <td class="roweven center">24th of March, 2019.</td>
-                                        <td class="roweven">N0 </td>
-                                        <td class="roweven">Yes </td>
-                                        <td class="roweven center">7,200.00</td>
-                                        <td class="roweven center">view</td>   
-                                    </tr>
-                                    <tr>
-                                    <td class="rowodd center">1</td>
-                                    <td class="rowodd center">20th of March, 2019.</td>
-                                    <td class="rowodd">Yes </td>
-                                    <td class="rowodd">No </td>
-                                    <td class="rowodd center">10,000.00</td>
-                                    <td class="rowodd center">view</td>   
-                                </tr>
-                                <tr>
-                                        <td class="roweven center">2</td>
-                                        <td class="roweven center">24th of March, 2019.</td>
-                                        <td class="roweven">N0 </td>
                                         <td class="roweven">Yes </td>
                                         <td class="roweven center">7,200.00</td>
                                         <td class="roweven center">view</td>   
@@ -115,7 +111,6 @@
                                     <tr>
                                         <td class="rowodd center">1</td>
                                         <td class="rowodd center">20th of March, 2019.</td>
-                                        <td class="rowodd">Yes </td>
                                         <td class="rowodd">No </td>
                                         <td class="rowodd center">10,000.00</td>
                                         <td class="rowodd center">view</td>   
@@ -124,6 +119,19 @@
                                         <td class="roweven center">2</td>
                                         <td class="roweven center">24th of March, 2019.</td>
                                         <td class="roweven">N0 </td>
+                                        <td class="roweven center">7,200.00</td>
+                                        <td class="roweven center">view</td>   
+                                    </tr>
+                                    <tr>
+                                        <td class="rowodd center">1</td>
+                                        <td class="rowodd center">20th of March, 2019.</td>
+                                        <td class="rowodd">Yes </td>
+                                        <td class="rowodd center">10,000.00</td>
+                                        <td class="rowodd center">view</td>   
+                                    </tr>
+                                    <tr>
+                                        <td class="roweven center">2</td>
+                                        <td class="roweven center">24th of March, 2019.</td>
                                         <td class="roweven">Yes </td>
                                         <td class="roweven center">7,200.00</td>
                                         <td class="roweven center">view</td>   
@@ -132,13 +140,13 @@
                                         <td class="rowodd center">1</td>
                                         <td class="rowodd center">20th of March, 2019.</td>
                                         <td class="rowodd">Yes </td>
-                                        <td class="rowodd">No </td>
                                         <td class="rowodd center">10,000.00</td>
                                         <td class="rowodd center">view</td>   
                                     </tr>
                                     <tr>
-                                        <td colspan="6" class="subheading">Available Balance: &#x20A6;120,000.00</td>
+                                        <td colspan="6" class="subheading">Available Balance: &#x20A6;50,000.00</td>
                                     </tr>
+                                    
     
                             </tbody>
                         </table>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/grid-layout.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/staff-style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
@@ -24,117 +25,157 @@
 
     <div class="row">
         <aside class="col-2 col-3-tab menucontainer">
-            <div id="menucontainer_img">
-                <img src="../images/image-placeholder.jpg" class="img">
-            </div>
-            <h1 class="center">Orimogunje T.O.</h1>
-
-            <ul class="menu">
-                <li><a href="staff-dashboard.html">Dashboard</a></li>
-                <li><a href="staff-view-user-account.html">View Account List</a></li>
-                <li><a href="staff-credit-account.html">Credit Account</a></li>
-                <li><a href="staff-debit-account.html">Debit Bank Account</a></li>
-                <li><a href="staff-suspend-account.html">Delete Customer Account</a></li>
-                <li>Logout</li>
-            </ul>
-
-        </aside>
-        <aside class="col-7 col-9-tab">
+                <div id="menucontainer_img">
+                    <img src="../images/image-placeholder.jpg" class="img">
+                </div>
+                <h1 class="center">Orimogunje T.O.</h1>
+    
+                <ul class="menu">
+                    <li><a href="staff-dashboard.html">Dashboard</a></li>
+                    <li><a href="staff-view-user-account.html">View Account List</a></li>
+                    <li><a href="staff-credit-account.html">Perform Transaction</a></li>
+                    <!-- <li><a href="staff-debit-account.html">Debit Bank Account</a></li>
+                    <li><a href="staff-suspend-account.html">Delete Customer Account</a></li>
+                    <li>Logout</li> -->
+                </ul>
+    
+            </aside>
+            <aside class="col-7 col-9-tab">
             <h1 id="page_title">Dashboard</h1>
-            <div class="row">
+            <!--<div class="row">
                 
                     <div class="col-4">
                         <ul class="row">
-                            <a href="staff-credit-account.html">
-                                <li class="col-7 dashboardModuleName">Credit</li>
-                                <li class="col-5 dashboardModuleValue">an account</li>
+                            <a href="staff-view-user-account.html">
+                                <li class="col-7 dashboardModuleName">View all users</li>
+                                <li class="col-5 dashboardModuleValue">account</li>
                             </a>
                         </ul>
                     </div>
                 
                 <div class="col-4">
                         <ul class="row">
-                            <a href="staff-debit-account.html">
-                                <li class="col-7 dashboardModuleName account-module-color">Debit </li>
-                                <li class="col-5 dashboardModuleValue">an account</li>
+                            <a href="staff-credit-account.html">
+                                <li class="col-7 dashboardModuleName account-module-color">Perfrom a </li>
+                                <li class="col-5 dashboardModuleValue">Transaction</li>
                             </a>
                         </ul>
                     </div>
-                <div class="col-4">
+                 <div class="col-4">
                     <ul class="row" >
                         <a href="staff-suspend-account.html">
                             <li class="col-7 dashboardModuleName account-status-color">Delete </li>
                             <li class="col-5 dashboardModuleValue">an account</li>
                         </a>
                     </ul>
-                </div>
-            </div>
+                </div> 
+            </div>-->
             <div class="row">
                 <div class="col-12">
                     <div>
                         <table width="100%" border="0">
                             <th>
                                 <tr>
-                                    <td colspan="6" class="rowodd">Account Log</td>
+                                    <td colspan="6" class="rowodd"><b>Activities of Account Log</b></td>
                                 </tr>
                                 <tr>
                                     <td class="subheading center">S/N</td>
-                                    <td class="subheading center">Client's Name</td>
-                                    <td class="subheading">Type</td>
+                                    <td class="subheading">Client</td>
+                                    <td class="subheading">Transaction</td>
                                     <td class="subheading center">Amount (&#x20A6;)</td>
-                                    <td class="subheading center">Transaction</td>
+                                    <td class="subheading center">Action</td>
                                 </tr>
                             </th>
                             <tbody>
                                 <tr>
                                     <td class="rowodd center">1</td>
-                                    <td class="rowodd center">Odejobi Olushola</td>
+                                    <td class="rowodd">Odejobi Olushola - 1234567810</td>
                                     <td class="rowodd">Debit </td>
                                     <td class="rowodd center">10,200.00</td>
-                                    <td class="rowodd center">view</td>   
+                                    <td class="rowodd center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
                                     <td class="roweven center">2</td>
-                                    <td class="roweven center">Obanla Niniola</td>
+                                    <td class="roweven">Ayeni Temitope - 1234567811</td>
                                     <td class="roweven">Credit </td>
-                                    <td class="roweven center">10,500.00</td>
-                                    <td class="roweven center">view</td>   
+                                    <td class="roweven center">10,200.00</td>
+                                    <td class="roweven center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
                                     <td class="rowodd center">1</td>
-                                    <td class="rowodd center">Odejobi Olushola</td>
+                                    <td class="rowodd">Odejobi Olushola - 1234567810</td>
                                     <td class="rowodd">Debit </td>
                                     <td class="rowodd center">10,200.00</td>
-                                    <td class="rowodd center">view</td>   
+                                    <td class="rowodd center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
                                     <td class="roweven center">2</td>
-                                    <td class="roweven center">Obanla Niniola</td>
+                                    <td class="roweven">Ayeni Temitope - 1234567811</td>
                                     <td class="roweven">Credit </td>
-                                    <td class="roweven center">10,500.00</td>
-                                    <td class="roweven center">view</td>   
+                                    <td class="roweven center">10,200.00</td>
+                                    <td class="roweven center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
                                     <td class="rowodd center">1</td>
-                                    <td class="rowodd center">Odejobi Olushola</td>
+                                    <td class="rowodd">Odejobi Olushola - 1234567810</td>
                                     <td class="rowodd">Debit </td>
                                     <td class="rowodd center">10,200.00</td>
-                                    <td class="rowodd center">view</td>   
+                                    <td class="rowodd center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
                                     <td class="roweven center">2</td>
-                                    <td class="roweven center">Obanla Niniola</td>
+                                    <td class="roweven">Ayeni Temitope - 1234567811</td>
                                     <td class="roweven">Credit </td>
-                                    <td class="roweven center">10,500.00</td>
-                                    <td class="roweven center">view</td>   
+                                    <td class="roweven center">10,200.00</td>
+                                    <td class="roweven center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <tr>
-                                        <td class="rowodd center">1</td>
-                                        <td class="rowodd center">Odejobi Olushola</td>
-                                        <td class="rowodd">Debit </td>
-                                        <td class="rowodd center">10,200.00</td>
-                                        <td class="rowodd center">view</td>   
-                                    </tr>
+                                    <td class="rowodd center">1</td>
+                                    <td class="rowodd">Odejobi Olushola - 1234567810</td>
+                                    <td class="rowodd">Debit </td>
+                                    <td class="rowodd center">10,200.00</td>
+                                    <td class="rowodd center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
+                                </tr>
+                                <tr>
+                                    <td class="roweven center">2</td>
+                                    <td class="roweven">Ayeni Temitope - 1234567811</td>
+                                    <td class="roweven">Credit </td>
+                                    <td class="roweven center">10,200.00</td>
+                                    <td class="roweven center">
+                                        <a href="view-single-user-account.html">
+                                            <i class="fa fa-eye" title="view transaction"  style="color:#333; font-size:18px;"></i>
+                                        </a>
+                                    </td>   
+                                </tr>
+                               
                                 <tr>
                                     <td colspan="6" class="subheading">Available Balance: &#x20A6;120,000.00</td>
                                 </tr>

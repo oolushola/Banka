@@ -6,7 +6,6 @@ import router from './routes/bankaroutes';
 
 const app = express();
 
-// Parse incoming request data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', router);
