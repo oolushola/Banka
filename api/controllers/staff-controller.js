@@ -197,6 +197,30 @@ class staffController {
       });
     });
   }
+  
+  static getAccountByStatus(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) res.status(401).send({ status: 401, msg: 'unverifiable token' });
+      const { status } = req.params;
+      const { id } = decoded;
+
+
+      const checkUser = 'SELECT email, user_type, is_admin  FROM users WHERE id = $1 AND (user_type = $2 OR is_admin = $3)';
+      pool.query(checkUser, [id, 'staff', true], (err, content) => {
+        if (err) return next(err);
+        if (content.rows.length <= 0) return res.status(401).send({ status: 401, msg: 'unauthorized user' });
+      });
+
+      const getAccountByStatus = 'SELECT a.last_name, a.first_name, a.email, a.phone_no, b.account_number, b.created_on, b.account_type, b.account_status, b.balance FROM users a LEFT JOIN accounts b ON a.id = b.owner WHERE a.user_type = $1 AND b.account_status = $2 ORDER BY a.last_name ASC';
+      pool.query(getAccountByStatus, ['client', status], async (error, result) => {
+        if (error) return next(error);
+        await res.status(200).send({ status: 200, data: result.rows });
+      });
+    });
+  }
 }
 
 
