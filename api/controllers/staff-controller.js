@@ -165,6 +165,38 @@ class staffController {
       });
     });
   }
+
+  static getSpecificAccount(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, msg: 'unverifiable token' });
+
+      const { id } = decoded;
+      const { accountNumber } = req.params;
+
+      const checkUser = 'SELECT email, user_type, is_admin  FROM users WHERE id = $1 AND (user_type = $2 OR is_admin = $3)';
+      pool.query(checkUser, [id, 'staff', true], (err, content) => {
+        if (err) return next(err);
+        if (content.rows.length <= 0) return res.status(401).send({ status: 401, msg: 'unauthorized user' });
+      });
+
+      const getUserAccount = 'SELECT a.last_name, a.first_name, a.email, a.phone_no, b.account_number, b.created_on, b.account_type, b.account_status, b.balance FROM users a LEFT JOIN accounts b ON a.id = b.owner WHERE account_number = $1 AND a.user_type = $2';
+      pool.query(getUserAccount, [accountNumber, 'client'], (err, result) => {
+        if (err) return next(err);
+        if (result.rows.length <= 0) return res.status(404).send({ status: 404, msg: 'user not found' });
+
+        const userInfo = result.rows;
+
+        const getUserTransHistory = 'SELECT * FROM transactions WHERE account_number = $1 ORDER BY created_on DESC';
+        pool.query(getUserTransHistory, [accountNumber], async (err, content) => {
+          if (err) return res.status(500).send({ status: 500, msg: 'internal server error' });
+          await res.status(200).send({ status: 200, userInfo, transactionInfo: content.rows });
+        });
+      });
+    });
+  }
 }
 
 
