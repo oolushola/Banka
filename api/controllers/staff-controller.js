@@ -118,6 +118,31 @@ class staffController {
       });
     });
   }
+
+  static deleteAccount(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) res.status(401).send({ status: 401, auth: false, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'unverifiable token' });
+      const checkUser = 'SELECT email, user_type, is_admin  FROM users WHERE id = $1 AND (user_type = $2 OR is_admin = $3)';
+      pool.query(checkUser, [decoded.id, 'staff', true], (err, content) => {
+        if (err) return next(err);
+        if (content.rows.length <= 0) return res.status(401).send({ status: 401, msg: 'unauthorized user' });
+      });
+      const { accountNumber } = req.params;
+      const checkAccountNumber = 'SELECT account_number FROM accounts WHERE account_number = $1 ';
+      pool.query(checkAccountNumber, [accountNumber], (err, result) => {
+        if (err) return res.status(500).send({ status: 500, msg: 'internal server error' });
+        if (result.rows.length <= 0) return res.status(400).send({ status: 400, msg: 'account number not recognized' });
+
+        const deleteQuery = 'DELETE FROM accounts WHERE account_number = $1';
+        pool.query(deleteQuery, [accountNumber], async (error, result) => {
+          await res.status(200).send({ status: 200, msg: 'account deleted' });
+        });
+      });
+    });
+  }
 }
 
 
