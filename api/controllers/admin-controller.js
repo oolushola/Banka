@@ -33,7 +33,7 @@ class adminController {
       return res.status(200).send({ status: 200, auth: true, token });
     });
   }
-  
+
   static giveAccountNumber(req, res) {
     const token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
@@ -61,7 +61,7 @@ class adminController {
       });
     });
   }
-  
+
   static updateAccountStatus(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
@@ -81,6 +81,45 @@ class adminController {
       pool.query(updateAccountByStatus, [status, ownerId], async (error, result) => {
         if (error) return res.send('something went wrong');
         await res.status(201).send({ status: 201, msg: 'account status updated' });
+      });
+    });
+  }
+
+  static adminRegister(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(500).send({ status: 500, msg: 'unverifiable token' });
+      const { id } = decoded;
+
+      const checkUser = 'SELECT email, user_type, is_admin  FROM users WHERE id = $1 AND is_admin = $2';
+      pool.query(checkUser, [id, true], (err, content) => {
+        if (err) return next(err);
+        if (content.rows.length <= 0) return res.status(401).send({ status: 401, msg: 'unauthorized user' });
+      });
+      const {
+        userType, firstName, lastName, email, password, phoneNo,
+      } = req.body;
+
+      let isAdmin;
+      if (userType === 'staff') { isAdmin = false; }
+      if (userType === 'admin') { isAdmin = true; }
+
+      const hashedPassword = bcrypt.hashSync(password, 8);
+      const checkQueryText = 'SELECT email FROM users where email = $1';
+      pool.query(checkQueryText, [email], async (err, result) => {
+        if (err) throw err;
+        if (result.rows.length >= 1) {
+          return res.status(409).send('record exists');
+        }
+        const insertQuery = 'INSERT INTO users (email, password, first_name, last_name,  user_type, phone_no, is_admin, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+        const createdAt = new Date();
+        pool.query(insertQuery, [email, hashedPassword, firstName, lastName, userType, phoneNo, isAdmin, createdAt], async () => {
+          if (err) throw err;
+          await res.status(201);
+        });
+        return res.send({ status: 201, msg: 'registration successful' });
       });
     });
   }
