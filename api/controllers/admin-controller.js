@@ -33,6 +33,34 @@ class adminController {
       return res.status(200).send({ status: 200, auth: true, token });
     });
   }
+  
+  static giveAccountNumber(req, res) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        return res.status(500).send({
+          status: 500, auth: false, token: null, msg: 'unverifiable token',
+        });
+      }
+
+      const id = decoded;
+      const { ownerId, accountNumber } = req.body;
+
+      const checkUser = 'SELECT * FROM accounts WHERE owner = $1 ';
+      pool.query(checkUser, [ownerId], (err, result) => {
+        if (err) return res.status(500).send('internal server error');
+        if (result.rows.length <= 0) return res.status(404).send({ status: 404, msg: 'user not found', id });
+
+        const updateAccountNumber = 'UPDATE accounts SET account_number = $1 WHERE owner = $2';
+        pool.query(updateAccountNumber, [accountNumber, ownerId], async (err, content) => {
+          if (err) return res.status(500).send({ status: 500, msg: 'internal server error' });
+          await res.status(201).send({ status: 201, msg: 'account number assigned', content });
+        });
+      });
+    });
+  }
 }
 
 export default adminController;
