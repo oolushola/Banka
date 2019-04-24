@@ -61,6 +61,29 @@ class adminController {
       });
     });
   }
+  
+  static updateAccountStatus(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) res.status(500).send({ status: 500, msg: 'unverifiable token' });
+      const { ownerId, status } = req.params;
+      const { id } = decoded;
+
+      const checkUser = 'SELECT email, user_type, is_admin  FROM users WHERE id = $1 AND is_admin = $2';
+      pool.query(checkUser, [id, true], (err, content) => {
+        if (err) return next(err);
+        if (content.rows.length <= 0) return res.status(401).send({ status: 401, msg: 'unauthorized user' });
+      });
+
+      const updateAccountByStatus = 'UPDATE accounts SET account_status = $1 WHERE owner = $2 ';
+      pool.query(updateAccountByStatus, [status, ownerId], async (error, result) => {
+        if (error) return res.send('something went wrong');
+        await res.status(201).send({ status: 201, msg: 'account status updated' });
+      });
+    });
+  }
 }
 
 export default adminController;
