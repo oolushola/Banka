@@ -56,6 +56,91 @@ class userController {
       return res.status(200).send({ status: 200, auth: true, token });
     });
   }
+
+  static updateProfile(req, res) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, auth: false, message: 'Invalid token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
+
+      const {
+        firstName, lastName, phoneNo, state, city, occupation, gender, address,
+      } = req.body;
+
+      const { id } = decoded;
+
+      const checkUser = 'SELECT * FROM users where id = $1 AND user_type = $2';
+      pool.query(checkUser, [id, 'client'], async (error, result) => {
+        if (error) return res.status(500).send({ status: 500, msg: 'internal server error' });
+        if (result.rows.length <= 0) await res.status(404).send({ status: 404, msg: 'user not found' });
+
+        const updatedTime = new Date();
+        const updateUserRecord = 'UPDATE users SET first_name = $1, last_name = $2, phone_no = $3, state = $4, city = $5, occupation = $6, gender = $7, address = $8, updated_at = $9 WHERE id = $10';
+        pool.query(updateUserRecord, [firstName, lastName, phoneNo, state, city, occupation, gender, address, updatedTime, id], () => res.status(201).send({ status: 201, msg: 'profile updated' }));
+      });
+    });
+  }
+
+  static createBankAccount(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'no token' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'invalid token' });
+
+      const { id } = decoded;
+
+      const getUser = 'SELECT owner FROM accounts WHERE owner = $1';
+      pool.query(getUser, [id], (error, result) => {
+        if (error) { return next(error); }
+        if (result.rows.length > 0) return res.status(409).send({ status: 409, msg: 'account exist' });
+
+        const { dob, accountType } = req.body;
+        const balance = Number(req.body.balance);
+
+        const insertQuery = 'INSERT INTO accounts (owner, dob, account_type, balance) VALUES ($1, $2, $3, $4) ';
+        pool.query(insertQuery, [id, dob, accountType, balance], (err) => {
+          if (error) throw err;
+          return res.status(201).send({ status: 201, msg: 'account created' });
+        });
+      });
+    });
+  }
+
+
+  static resetPassword(req, res) {
+    if (!req.body.email) return res.status(422).send({ status: 422, msg: 'email is required.' });
+    const user = req.body.email;
+    const getUser = users.find(userdb => userdb.email === user);
+    if (!getUser) return res.status(404).send({ status: 404, msg: 'user not found.' });
+    return res.status(200).send({ status: 200, msg: 'user found.' });
+  }
+
+  static changePassword(req, res) {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'invalid token' });
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(500).send({ status: 500, auth: false, msg: 'failed to verify token' });
+
+      const { id } = decoded;
+
+      const checkUser = 'SELECT id, password FROM users WHERE id = $1 AND user_type = $2';
+      pool.query(checkUser, [id, 'client'], (err, result) => {
+        if (result.rows.length <= 0) return res.status(404).send({ status: 404, msg: 'user not found' });
+
+        const { oldPassword, newPassword } = req.body;
+
+        const confirmOldPassword = bcrypt.compareSync(oldPassword, result.rows[0].password);
+        if (!confirmOldPassword) return res.status(400).send({ status: 400, msg: 'previous password is incorrect' });
+
+        const hashedPassword = bcrypt.hashSync(newPassword, 8);
+
+        const passwordQuery = 'UPDATE users SET password = $1 WHERE id = $2';
+        pool.query(passwordQuery, [hashedPassword, id], () => res.status(201).send({ status: 201, msg: 'password updated' }));
+      });
+    });
+  }
 }
 
 
