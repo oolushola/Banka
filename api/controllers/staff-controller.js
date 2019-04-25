@@ -56,7 +56,7 @@ class staffController {
   }
 
   static transactions(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -120,7 +120,7 @@ class staffController {
   }
 
   static deleteAccount(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) res.status(401).send({ status: 401, auth: false, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -145,7 +145,7 @@ class staffController {
   }
 
   static allBankAccounts(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -167,7 +167,7 @@ class staffController {
   }
 
   static getSpecificAccount(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -199,7 +199,7 @@ class staffController {
   }
   
   static getAccountByStatus(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {

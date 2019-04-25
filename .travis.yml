@@ -2,11 +2,8 @@ language: node_js
 node_js:
     - "10.15.1"
 
-services:
-    - postgresql
-
 addons:
-  postgresql: "11.2"
+  postgresql: "9.6"
 
 cache:
   directories:

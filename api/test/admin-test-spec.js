@@ -164,7 +164,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', '')
+        .set('authorization', '')
         .send(generateAccount)
         .end((err, res) => {
           res.should.have.status(401);
@@ -182,7 +182,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', `${adminToken}kdkjdkd8dsh`)
+        .set('authorization', `${adminToken}kdkjdkd8dsh`)
         .send(generateAccount)
         .end((err, res) => {
           res.should.have.status(401);
@@ -199,7 +199,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
           res.should.has.status(422);
@@ -216,7 +216,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
           res.should.has.status(422);
@@ -234,7 +234,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
           res.should.has.status(404);
@@ -251,7 +251,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
           res.should.has.status(201);
@@ -286,7 +286,7 @@ describe('Admin /', () => {
       const status = 'active';
       chai.request(app)
         .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
-        .set('x-access-token', '')
+        .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -301,7 +301,7 @@ describe('Admin /', () => {
       const status = 'active';
       chai.request(app)
         .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
-        .set('x-access-token', `${adminToken}kdkjdkd8dsh`)
+        .set('authorization', `${adminToken}kdkjdkd8dsh`)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -316,7 +316,7 @@ describe('Admin /', () => {
       const status = 'active';
       chai.request(app)
         .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .end((err, res) => {
           res.should.has.status(201);
           res.body.should.have.property('status');
@@ -354,7 +354,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .post('/api/v1/admin/auth/registration')
-        .set('x-access-token', '')
+        .set('authorization', '')
         .send(registrationDetails)
         .end((err, res) => {
           res.should.have.status(401);
@@ -376,7 +376,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .post('/api/v1/admin/auth/registration')
-        .set('x-access-token', `${adminToken}xfsgxc.klo`)
+        .set('authorization', `${adminToken}xfsgxc.klo`)
         .send(registrationDetails)
         .end((err, res) => {
           res.should.have.status(401);
@@ -398,7 +398,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .post('/api/v1/admin/auth/registration')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(registrationDetails)
         .end((err, res) => {
           res.should.have.status(409);
@@ -420,7 +420,7 @@ describe('Admin /', () => {
       };
       chai.request(app)
         .post('/api/v1/admin/auth/registration')
-        .set('x-access-token', adminToken)
+        .set('authorization', adminToken)
         .send(registrationDetails)
         .end((err, res) => {
           res.should.have.status(201);

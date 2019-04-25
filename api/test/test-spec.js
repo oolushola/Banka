@@ -223,7 +223,7 @@ describe('Users /', () => {
     });
 
     it('should not update user profile without first name', (done) => {
-      const id = 1;
+      //    const id = 1;
       const user = {
         lastName: 'testname',
         phoneNo: '080225566',
@@ -232,6 +232,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .put('/api/v1/update-profile')
+        .set('authorization', userToken)
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
@@ -253,6 +254,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .put('/api/v1/update-profile')
+        .set('authorization', userToken)
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
@@ -274,6 +276,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .put('/api/v1/update-profile')
+        .set('authorization', userToken)
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
@@ -296,7 +299,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .put('/api/v1/update-profile')
-        .set('x-access-token', `${userToken}lskkdi`)
+        .set('authorization', `${userToken}lskkdi`)
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
@@ -321,7 +324,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .put('/api/v1/update-profile')
-        .set('x-access-token', userToken)
+        .set('authorization', userToken)
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
@@ -362,7 +365,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .post('/api/v1/accounts')
-        .set('x-access-token', `${userToken}lskkdi`)
+        .set('authorization', `${userToken}lskkdi`)
         .send(accountinfo)
         .end((err, res) => {
           res.should.have.status(401);
@@ -383,7 +386,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .post('/api/v1/accounts')
-        .set('x-access-token', `${userToken}`)
+        .set('authorization', `${userToken}`)
         .send(bankAccount)
         .end((err, res) => {
           res.should.have.status(422);
@@ -402,7 +405,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .post('/api/v1/accounts')
-        .set('x-access-token', `${userToken}`)
+        .set('authorization', `${userToken}`)
         .send(bankAccount)
         .end((err, res) => {
           res.should.have.status(422);
@@ -422,7 +425,7 @@ describe('Users /', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(bankAccount)
-        .set('x-access-token', `${userToken}`)
+        .set('authorization', `${userToken}`)
         .end((err, res) => {
           res.should.have.status(422);
           res.body.should.have.property('status');
@@ -445,7 +448,7 @@ describe('Users /', () => {
       };
       chai.request(app)
         .post('/api/v1/accounts')
-        .set('x-access-token', `${userToken}`)
+        .set('authorization', `${userToken}`)
         .send(bankAccount)
         .end((err, res) => {
           res.should.have.status(201);

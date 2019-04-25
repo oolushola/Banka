@@ -35,7 +35,7 @@ class adminController {
   }
 
   static giveAccountNumber(req, res) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -63,7 +63,7 @@ class adminController {
   }
 
   static updateAccountStatus(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -86,7 +86,7 @@ class adminController {
   }
 
   static adminRegister(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
