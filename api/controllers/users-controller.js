@@ -58,7 +58,7 @@ class userController {
   }
 
   static updateProfile(req, res) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, auth: false, message: 'Invalid token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -83,7 +83,7 @@ class userController {
   }
 
   static createBankAccount(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'no token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
@@ -118,7 +118,7 @@ class userController {
   }
 
   static changePassword(req, res) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'invalid token' });
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) return res.status(500).send({ status: 500, auth: false, msg: 'failed to verify token' });

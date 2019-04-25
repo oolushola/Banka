@@ -181,7 +181,7 @@ describe('Staff /', () => {
       };
       chai.request(app)
         .post(`/api/v1/transactions/${transaction.accountNumber}`)
-        .set('x-access-token', '')
+        .set('authorization', '')
         .send(transaction)
         .end((err, res) => {
           res.should.have.status(401);
@@ -203,7 +203,7 @@ describe('Staff /', () => {
       };
       chai.request(app)
         .post(`/api/v1/transactions/${transaction.accountNumber}`)
-        .set('x-access-token', `${staffToken}jsjkalls254`)
+        .set('authorization', `${staffToken}jsjkalls254`)
         .send(transaction)
         .end((err, res) => {
           res.should.have.status(401);
@@ -236,7 +236,7 @@ describe('Staff /', () => {
     it('should not display user account if no token', (done) => {
       chai.request(app)
         .get('/api/v1/accounts')
-        .set('x-access-token', '')
+        .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -249,7 +249,7 @@ describe('Staff /', () => {
     it('should not display user account if token is unverifiable', (done) => {
       chai.request(app)
         .get('/api/v1/accounts')
-        .set('x-access-token', `${staffToken}kdkjdkd8dsh`)
+        .set('authorization', `${staffToken}kdkjdkd8dsh`)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -262,7 +262,7 @@ describe('Staff /', () => {
     it('should get all users account', (done) => {
       chai.request(app)
         .get('/api/v1/accounts')
-        .set('x-access-token', staffToken)
+        .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
@@ -292,7 +292,7 @@ describe('Staff /', () => {
       const accountNumber = '123456789';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
-        .set('x-access-token', '')
+        .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -306,7 +306,7 @@ describe('Staff /', () => {
       const accountNumber = '1234560001';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
-        .set('x-access-token', `${staffToken}kdkjdkd8dsh`)
+        .set('authorization', `${staffToken}kdkjdkd8dsh`)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -320,7 +320,7 @@ describe('Staff /', () => {
       const accountNumber = '25566447788';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
-        .set('x-access-token', staffToken)
+        .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('status');
@@ -334,7 +334,7 @@ describe('Staff /', () => {
       const accountNumber = '3045625897';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
-        .set('x-access-token', staffToken)
+        .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
@@ -365,7 +365,7 @@ describe('Staff /', () => {
       const status = 'active';
       chai.request(app)
         .get(`/accounts/&&status=${status}`)
-        .set('x-access-token', '')
+        .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -379,7 +379,7 @@ describe('Staff /', () => {
       const status = 'dormant';
       chai.request(app)
         .get(`/accounts/&&status=${status}`)
-        .set('x-access-token', `${staffToken}vsgjskjs.yeu`)
+        .set('authorization', `${staffToken}vsgjskjs.yeu`)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -393,7 +393,7 @@ describe('Staff /', () => {
       const status = 'dormant';
       chai.request(app)
         .get(`/accounts/&&status=${status}`)
-        .set('x-access-token', staffToken)
+        .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
@@ -424,7 +424,7 @@ describe('Staff /', () => {
       const accountNumber = '1234560001';
       chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}`)
-        .set('x-access-token', '')
+        .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -440,7 +440,7 @@ describe('Staff /', () => {
       const accountNumber = '1234560001';
       chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}`)
-        .set('x-access-token', `${staffToken}blsjd.hdjs`)
+        .set('authorization', `${staffToken}blsjd.hdjs`)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('status');
@@ -456,7 +456,7 @@ describe('Staff /', () => {
       const accountNumber = '1234560002';
       chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}`)
-        .set('x-access-token', staffToken)
+        .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status');
