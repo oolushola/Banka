@@ -330,8 +330,8 @@ describe('Staff /', () => {
           done();
         });
     });
-    it('should not get an account number that exists', (done) => {
-      const accountNumber = '1234560001';
+    it('should get an account number that exists', (done) => {
+      const accountNumber = '3045625897';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
         .set('x-access-token', staffToken)
@@ -452,8 +452,8 @@ describe('Staff /', () => {
           done();
         });
     });
-    it('should should delete user account', (done) => {
-      const accountNumber = '1234560001';
+    it('should delete user account', (done) => {
+      const accountNumber = '1234560002';
       chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}`)
         .set('x-access-token', staffToken)
