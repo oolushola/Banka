@@ -84,8 +84,8 @@ class Validator {
   static validateGenerateAccountNumber(req, res, next) {
     const { ownerId, accountNumber } = req.body;
 
-    if (!ownerId) return res.status(422).send({ status: 'failed', msg: 'account owner is required' });
-    if (!accountNumber) return res.status(422).send({ status: 'failed', msg: 'account number is required' });
+    if (!ownerId) return res.status(422).send({ status: 422, msg: 'account owner is required' });
+    if (!accountNumber) return res.status(422).send({ status: 422, msg: 'account number is required' });
 
     return next();
   }
