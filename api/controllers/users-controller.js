@@ -57,6 +57,62 @@ class userController {
     });
   }
 
+  static getTransactionHistory(req, res) {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).send({
+        status: 401, msg: 'no token', token: null, auth: false,
+      });
+    }
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
+      const { accountNumber } = req.params;
+
+      // check for the validity of the account number
+      const checkQuery = 'SELECT * FROM accounts WHERE account_number = $1 AND owner = $2';
+      pool.query(checkQuery, [accountNumber, decoded.id], (err, result) => {
+        if (result.rows.length <= 0) {
+          return res.status(404).send({ status: 404, msg: 'account number not found' });
+        }
+        const transQuery = 'SELECT * FROM transactions WHERE account_number = $1 ORDER BY created_on ASC';
+        pool.query(transQuery, [accountNumber], async (err, result) => {
+          if (err) return res.status(500).send('internal server error');
+          if (result.rows.length <= 0) {
+            return res.status(200).send({ status: 200, msg: 'no transaction record' });
+          }
+          await res.status(200).send({ status: 200, msg: result.rows });
+        });
+      });
+    });
+  }
+
+  static getSpecificUserTransaction(req, res) {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).send({
+        status: 401, msg: 'no token', token: null, auth: false,
+      });
+    }
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
+      const { transactionid } = req.params;
+      const { id } = decoded;
+
+      console.log(typeof transactionid)
+
+      const checkAccountNumber = 'SELECT * FROM accounts WHERE owner = $1';
+      pool.query(checkAccountNumber, [id], (err, result)=>{
+        if (err) return res.send('cant get transaction');
+        const accountNumber = result.rows[0].account_number;
+        const getTransHistory = 'SELECT a.created_on, a.transaction_type, a.amount, a.old_balance, a.new_balance, b.first_name, b.last_name FROM transactions a JOIN users b ON a.cashier = b.id WHERE a.id = $1 AND a.account_number = $2';
+        pool.query(getTransHistory, [transactionid, accountNumber], (err, content)=>{
+          return res.status(200).send({status: 200, data: content.rows});
+        });
+      });
+    });
+  }
+
   static updateProfile(req, res) {
     const token = req.headers.authorization;
     if (!token) return res.status(401).send({ status: 401, auth: false, message: 'Invalid token' });

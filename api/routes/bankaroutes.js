@@ -12,6 +12,8 @@ router.get('/', userController.index);
 router.post('/api/v1/auth/register', validator.validateUserSignup, userController.userSignUp);
 router.post('/api/v1/auth/login', validator.validateLogin, userController.userLogin);
 router.put('/api/v1/update-profile', validator.validateProfileUpdate, userController.updateProfile);
+router.get('/account/:accountNumber/transactions', userController.getTransactionHistory);
+router.get('/accounts/transactions/:transactionid', userController.getSpecificUserTransaction);
 router.post('/api/v1/accounts', validator.validateCreateBankAccount, userController.createBankAccount);
 router.post('/api/v1/password-reset', userController.resetPassword);
 router.patch('/api/v1/change-password', validator.validateChangePassword, userController.changePassword);
