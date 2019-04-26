@@ -76,7 +76,7 @@ class Validator {
 
     if (Number(confirmation) !== 1) return res.status(400).send({ status: 400, msg: 'confirm transaction' });
 
-    if (transactionType === 'credit' && Number(amount) <= 0) return res.status(400).send({ status: 400, msg: 'invalid amount' });
+    if (amount <= 0) return res.status(400).send({ status: 400, msg: 'invalid amount' });
 
     return next();
   }

@@ -1,6 +1,5 @@
 const transactions = [
   {
-    id: 1,
     transaction_type: '\'debit\'',
     account_number: '\'1234560001\'',
     cashier: 3,
@@ -9,7 +8,6 @@ const transactions = [
     new_balance: 700000,
   },
   {
-    id: 2,
     transaction_type: '\'credit\'',
     account_number: '\'1234560001\'',
     cashier: 3,
