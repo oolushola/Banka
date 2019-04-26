@@ -69,7 +69,6 @@ class userController {
       if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
       const { accountNumber } = req.params;
 
-      // check for the validity of the account number
       const checkQuery = 'SELECT * FROM accounts WHERE account_number = $1 AND owner = $2';
       pool.query(checkQuery, [accountNumber, decoded.id], (err, result) => {
         if (result.rows.length <= 0) {
@@ -112,6 +111,8 @@ class userController {
       });
     });
   }
+
+  
 
   static updateProfile(req, res) {
     const token = req.headers.authorization;
