@@ -15,10 +15,10 @@ describe('Users /', () => {
         .post('/api/v1/auth/register')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('email is required');
           done();
@@ -49,10 +49,10 @@ describe('Users /', () => {
         .post('/api/v1/auth/register')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           done();
         });
     });
@@ -104,10 +104,10 @@ describe('Users /', () => {
         .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('email is required');
           done();
@@ -139,10 +139,10 @@ describe('Users /', () => {
         .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.a('object');
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('password is required');
           done();
@@ -236,9 +236,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('first name is required');
           done();
@@ -258,9 +258,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('last name is required');
           done();
@@ -280,9 +280,9 @@ describe('Users /', () => {
         .send(user)
         .end((err, res) => {
           res.should.be.a('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('phone number is required');
           done();
@@ -389,9 +389,9 @@ describe('Users /', () => {
         .set('authorization', `${userToken}`)
         .send(bankAccount)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('date of birth is required');
           done();
@@ -408,9 +408,9 @@ describe('Users /', () => {
         .set('authorization', `${userToken}`)
         .send(bankAccount)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('account type is required');
           done();
@@ -427,9 +427,9 @@ describe('Users /', () => {
         .send(bankAccount)
         .set('authorization', `${userToken}`)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('opening balance is required');
           done();

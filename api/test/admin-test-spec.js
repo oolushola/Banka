@@ -18,10 +18,10 @@ describe('Admin /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('email is required');
           done();
         });
@@ -53,10 +53,10 @@ describe('Admin /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('password is required');
           done();
         });
@@ -202,10 +202,10 @@ describe('Admin /', () => {
         .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
-          res.should.has.status(422);
+          res.should.has.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('account owner is required');
           done();
         });
@@ -219,10 +219,10 @@ describe('Admin /', () => {
         .set('authorization', adminToken)
         .send(assignAccount)
         .end((err, res) => {
-          res.should.has.status(422);
+          res.should.has.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('account number is required');
           done();
         });
@@ -247,7 +247,7 @@ describe('Admin /', () => {
     it('should assign account number', (done) => {
       const assignAccount = {
         ownerId: 1,
-        accountNumber: '3045625897',
+        accountNumber: '1234560001',
       };
       chai.request(app)
         .patch('/api/v1/generate/account-number')
@@ -280,12 +280,11 @@ describe('Admin /', () => {
           done();
         });
     });
-
     it('should not update account status if no token', (done) => {
       const ownerId = 1;
       const status = 'active';
       chai.request(app)
-        .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
+        .patch(`/api/v1/accounts/account-id=${ownerId}&&account-status=${status}`)
         .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
@@ -300,7 +299,7 @@ describe('Admin /', () => {
       const ownerId = 1;
       const status = 'active';
       chai.request(app)
-        .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
+        .patch(`/api/v1/accounts/account-id=${ownerId}&&account-status=${status}`)
         .set('authorization', `${adminToken}kdkjdkd8dsh`)
         .end((err, res) => {
           res.should.have.status(401);
@@ -315,7 +314,7 @@ describe('Admin /', () => {
       const ownerId = 1;
       const status = 'active';
       chai.request(app)
-        .patch(`/accounts/account-id=${ownerId}&&account-status=${status}`)
+        .patch(`/api/v1/accounts/account-id=${ownerId}&&account-status=${status}`)
         .set('authorization', adminToken)
         .end((err, res) => {
           res.should.has.status(201);

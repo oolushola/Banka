@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
@@ -24,6 +27,7 @@ const makeTransaction = (type, oldBalance, amount) => {
   }
   return newBalance;
 };
+
 
 class staffController {
   static staffLogin(req, res, next) {
@@ -57,63 +61,69 @@ class staffController {
 
   static transactions(req, res, next) {
     const token = req.headers.authorization;
-    if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'no token' });
-
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) return res.status(401).send({ status: 401, auth: false, msg: 'unverifiable token' });
       const {
-        accountNumber, amount, transactionType, confirmation,
+        accountNumber, amount, transactionType,
       } = req.body;
 
-      const checkAccountNumber = 'SELECT account_number, account_status, owner FROM accounts WHERE account_number = $1 AND account_status = $2 ';
-      pool.query(checkAccountNumber, [accountNumber, 'active'], (error, result) => {
-        if (error) return next(error);
-        if (result.rows.length <= 0) { return res.status(404).send({ status: 404, msg: 'invalid account' }); }
+      const checkUser = 'SELECT * FROM users WHERE id = $1 AND user_type = $2 AND is_admin = $3';
+      pool.query(checkUser, [decoded.id, 'staff', false], (error, message) => {
+        if (error) return res.status(500).send({ status: 500, message: 'internal server error' });
+        if (message.rowCount <= 0) { return res.status(401).send({ status: 401, msg: 'unauthorized' }); }
 
-        let oldBalance;
-        let newBalance;
-        const createdOn = new Date();
+        const checkAccountNumber = 'SELECT account_number, account_status, owner FROM accounts WHERE account_number = $1 AND account_status = $2 ';
+        pool.query(checkAccountNumber, [accountNumber, 'active'], (error, result) => {
+          if (error) return next(error);
+          if (result.rows.length <= 0) { return res.status(404).send({ status: 404, msg: 'invalid account' }); }
 
-        const transaction = 'SELECT * FROM transactions WHERE account_number = $1';
-        pool.query(transaction, [accountNumber], (err, content) => {
-          if (err) return next(err);
-          if (content.rows.length <= 0) {
-            const getOpeningBalance = 'SELECT * FROM accounts WHERE account_number = $1';
-            pool.query(getOpeningBalance, [accountNumber], (err, accountInfo) => {
-              if (err) return next(err);
+          let oldBalance;
+          let newBalance;
+          const createdOn = new Date();
 
-              if (transactionType === 'debit' && Number(amount) > Number(accountInfo.rows[0].balance)) { return res.status(400).send({ status: 400, msg: 'Insufficent fund' }); }
+          const transaction = 'SELECT * FROM transactions WHERE account_number = $1';
+          pool.query(transaction, [accountNumber], (err, content) => {
+            if (err) return next(err);
+            if (content.rows.length <= 0) {
+              const getOpeningBalance = 'SELECT * FROM accounts WHERE account_number = $1';
+              pool.query(getOpeningBalance, [accountNumber], (err, accountInfo) => {
+                if (err) return next(err);
 
-              newBalance = makeTransaction(transactionType, accountInfo.rows[0].balance, amount);
-              oldBalance = accountInfo.rows[0].balance;
+                if (transactionType === 'debit' && Number(amount) > Number(accountInfo.rows[0].balance)) { return res.status(400).send({ status: 400, msg: 'Insufficent fund' }); }
+
+                newBalance = makeTransaction(transactionType, accountInfo.rows[0].balance, amount);
+                oldBalance = accountInfo.rows[0].balance;
+
+                const saveTransactions = 'INSERT INTO transactions (created_on, transaction_type, account_number, cashier, amount, old_balance, new_balance) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+                // eslint-disable-next-line max-len
+                pool.query(saveTransactions, [createdOn, transactionType, accountNumber, decoded.id, amount, oldBalance, newBalance], (err, content) => {
+                  if (err) return next(err);
+                  return res.status(201).send({ status: 201, msg: 'transaction successful' });
+                });
+              });
+            } else {
+              let transactionFound;
+              let transactionIndex;
+
+              const transactionRecord = content.rows;
+              transactionRecord.map((lastTransaction, index) => {
+                transactionFound = lastTransaction;
+                transactionIndex = index;
+              });
+
+              newBalance = makeTransaction(transactionType, transactionFound.new_balance, amount);
+              oldBalance = transactionFound.new_balance;
+
+              if (transactionType === 'debit' && Number(amount) > Number(transactionFound.new_balance)) { return res.status(400).send({ status: 400, msg: 'Insufficent fund' }); }
 
               const saveTransactions = 'INSERT INTO transactions (created_on, transaction_type, account_number, cashier, amount, old_balance, new_balance) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+              // eslint-disable-next-line no-shadow
               pool.query(saveTransactions, [createdOn, transactionType, accountNumber, decoded.id, amount, oldBalance, newBalance], (err, content) => {
                 if (err) return next(err);
                 return res.status(201).send({ status: 201, msg: 'transaction successful' });
               });
-            });
-          } else {
-            let transactionFound;
-            let transactionIndex;
-
-            const transactionRecord = content.rows;
-            transactionRecord.map((lastTransaction, index) => {
-              transactionFound = lastTransaction;
-              transactionIndex = index;
-            });
-
-            newBalance = makeTransaction(transactionType, transactionFound.new_balance, amount);
-            oldBalance = transactionFound.new_balance;
-
-            if (transactionType === 'debit' && Number(amount) > Number(transactionFound.new_balance)) { return res.status(400).send({ status: 400, msg: 'Insufficent fund' }); }
-
-            const saveTransactions = 'INSERT INTO transactions (created_on, transaction_type, account_number, cashier, amount, old_balance, new_balance) VALUES ($1, $2, $3, $4, $5, $6, $7)';
-            pool.query(saveTransactions, [createdOn, transactionType, accountNumber, decoded.id, amount, oldBalance, newBalance], (err, content) => {
-              if (err) return next(err);
-              return res.status(201).send({ status: 201, msg: 'transaction successful' });
-            });
-          }
+            }
+          });
         });
       });
     });
