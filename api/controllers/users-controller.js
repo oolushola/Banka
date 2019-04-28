@@ -23,13 +23,17 @@ class userController {
     pool.query(checkQueryText, [email], (err, result) => {
       if (err) throw err;
       if (result.rows.length >= 1) {
-        return res.status(409).send({ status: 409, msg: 'record exists' });
+        return res.status(409).send({
+          status: 409, msg: 'record exists',
+        });
       }
       const insertQuery = 'INSERT INTO users (email, password, user_type, is_admin) VALUES ($1, $2, $3, $4)';
       pool.query(insertQuery, [email, hashedPassword, 'client', false], (error) => {
         if (error) throw error;
         const token = jwt.sign({ email }, config.secret, { expiresIn: 86400 });
-        return res.status(201).send({ status: 201, auth: true, token });
+        return res.status(201).send({
+          status: 201, auth: true, token,
+        });
       });
     });
   }
@@ -53,34 +57,40 @@ class userController {
       }
 
       const token = jwt.sign({ id: result.rows[0].id }, config.secret, { expiresIn: 86400 });
-      return res.status(200).send({ status: 200, auth: true, token });
+      return res.status(200).send({
+        status: 200, auth: true, token,
+      });
     });
   }
 
   static getTransactionHistory(req, res) {
     const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).send({
-        status: 401, msg: 'no token', token: null, auth: false,
-      });
-    }
-
     jwt.verify(token, config.secret, (err, decoded) => {
-      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
+      if (err) {
+        return res.status(401).send({
+          status: 401, auth: false, msg: 'failed to authenticate token',
+        });
+      }
       const { accountNumber } = req.params;
 
       const checkQuery = 'SELECT * FROM accounts WHERE account_number = $1 AND owner = $2';
       pool.query(checkQuery, [accountNumber, decoded.id], (err, result) => {
         if (result.rows.length <= 0) {
-          return res.status(404).send({ status: 404, msg: 'account number not found' });
+          return res.status(401).send({
+            status: 401, msg: 'unauthorized',
+          });
         }
         const transQuery = 'SELECT * FROM transactions WHERE account_number = $1 ORDER BY created_on ASC';
-        pool.query(transQuery, [accountNumber], async (err, result) => {
+        pool.query(transQuery, [accountNumber], (err, result) => {
           if (err) return res.status(500).send('internal server error');
           if (result.rows.length <= 0) {
-            return res.status(200).send({ status: 200, msg: 'no transaction record' });
+            return res.status(200).send({
+              status: 200, msg: 'no transaction record',
+            });
           }
-          await res.status(200).send({ status: 200, msg: result.rows });
+          return res.status(200).send({
+            status: 200, msg: result.rows,
+          });
         });
       });
     });
@@ -88,35 +98,27 @@ class userController {
 
   static getSpecificUserTransaction(req, res) {
     const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).send({
-        status: 401, msg: 'no token', token: null, auth: false,
-      });
-    }
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
       const { transactionid } = req.params;
       const { id } = decoded;
 
-      console.log(typeof transactionid)
-
       const checkAccountNumber = 'SELECT * FROM accounts WHERE owner = $1';
-      pool.query(checkAccountNumber, [id], (err, result)=>{
-        if (err) return res.send('cant get transaction');
+      pool.query(checkAccountNumber, [id], (err, result) => {
+        if (err) return res.status(404).send({ msg: 'cant get transaction' });
         const accountNumber = result.rows[0].account_number;
         const getTransHistory = 'SELECT a.created_on, a.transaction_type, a.amount, a.old_balance, a.new_balance, b.first_name, b.last_name FROM transactions a JOIN users b ON a.cashier = b.id WHERE a.id = $1 AND a.account_number = $2';
-        pool.query(getTransHistory, [transactionid, accountNumber], (err, content)=>{
-          return res.status(200).send({status: 200, data: content.rows});
+        pool.query(getTransHistory, [transactionid, accountNumber], (error, content) => {
+          if (error) return res.status(500).send({ status: 500, msg: 'invalid transaction id' });
+          return res.status(200).send({ status: 200, data: content.rows });
         });
       });
     });
   }
 
-  
 
   static updateProfile(req, res) {
     const token = req.headers.authorization;
-    if (!token) return res.status(401).send({ status: 401, auth: false, message: 'Invalid token' });
 
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) return res.status(401).send({ status: 401, auth: false, msg: 'failed to authenticate token' });
@@ -141,25 +143,32 @@ class userController {
 
   static createBankAccount(req, res, next) {
     const token = req.headers.authorization;
-    if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'no token' });
-
     jwt.verify(token, config.secret, (err, decoded) => {
-      if (err) return res.status(401).send({ status: 401, auth: false, msg: 'invalid token' });
+      if (err) {
+        return res.status(401).send({
+          status: 401, auth: false, msg: 'invalid token',
+        });
+      }
 
       const { id } = decoded;
+      const { dob, accountType } = req.body;
+      const balance = Number(req.body.balance);
 
       const getUser = 'SELECT owner FROM accounts WHERE owner = $1';
       pool.query(getUser, [id], (error, result) => {
         if (error) { return next(error); }
-        if (result.rows.length > 0) return res.status(409).send({ status: 409, msg: 'account exist' });
-
-        const { dob, accountType } = req.body;
-        const balance = Number(req.body.balance);
+        if (result.rows.length > 0) {
+          return res.status(409).send({
+            status: 409, msg: 'account exist',
+          });
+        }
 
         const insertQuery = 'INSERT INTO accounts (owner, dob, account_type, balance) VALUES ($1, $2, $3, $4) ';
         pool.query(insertQuery, [id, dob, accountType, balance], (err) => {
           if (error) throw err;
-          return res.status(201).send({ status: 201, msg: 'account created' });
+          return res.status(201).send({
+            status: 201, msg: 'account created',
+          });
         });
       });
     });
@@ -176,25 +185,38 @@ class userController {
 
   static changePassword(req, res) {
     const token = req.headers.authorization;
-    if (!token) return res.status(401).send({ status: 401, auth: false, msg: 'invalid token' });
     jwt.verify(token, config.secret, (err, decoded) => {
-      if (err) return res.status(500).send({ status: 500, auth: false, msg: 'failed to verify token' });
+      if (err) {
+        return res.status(401).send({
+          status: 401, auth: false, msg: 'failed to verify token',
+        });
+      }
 
       const { id } = decoded;
 
       const checkUser = 'SELECT id, password FROM users WHERE id = $1 AND user_type = $2';
       pool.query(checkUser, [id, 'client'], (err, result) => {
-        if (result.rows.length <= 0) return res.status(404).send({ status: 404, msg: 'user not found' });
+        if (result.rows.length <= 0) {
+          return res.status(404).send({
+            status: 404, msg: 'user not found',
+          });
+        }
 
         const { oldPassword, newPassword } = req.body;
 
         const confirmOldPassword = bcrypt.compareSync(oldPassword, result.rows[0].password);
-        if (!confirmOldPassword) return res.status(400).send({ status: 400, msg: 'previous password is incorrect' });
+        if (!confirmOldPassword) {
+          return res.status(400).send({
+            status: 400, msg: 'previous password is incorrect',
+          });
+        }
 
         const hashedPassword = bcrypt.hashSync(newPassword, 8);
 
         const passwordQuery = 'UPDATE users SET password = $1 WHERE id = $2';
-        pool.query(passwordQuery, [hashedPassword, id], () => res.status(201).send({ status: 201, msg: 'password updated' }));
+        pool.query(passwordQuery, [hashedPassword, id], () => res.status(201).send({
+          status: 201, msg: 'password updated',
+        }));
       });
     });
   }

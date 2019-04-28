@@ -16,10 +16,10 @@ describe('Staff /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('email is required');
           done();
         });
@@ -51,10 +51,10 @@ describe('Staff /', () => {
         .send(staff)
         .end((err, res) => {
           res.should.be.an('object');
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('status');
           res.body.should.have.property('msg');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.msg.should.be.eql('password is required');
           done();
         });
@@ -163,10 +163,11 @@ describe('Staff /', () => {
       chai.request(app)
         .post(`/api/v1/transactions/${accountNumber}`)
         .send(transaction)
-        .end((err, res) => {
-          res.should.have.status(422);
+        .end((err, res) => { 
+          console.log(res.body);
+          res.should.have.status(400);
           res.body.should.have.property('status');
-          res.body.status.should.be.eql(422);
+          res.body.status.should.be.eql(400);
           res.body.should.have.property('msg');
           res.body.msg.should.be.eql('account number is require');
           done();
@@ -331,7 +332,7 @@ describe('Staff /', () => {
         });
     });
     it('should get an account number that exists', (done) => {
-      const accountNumber = '3045625897';
+      const accountNumber = '1234560001';
       chai.request(app)
         .get(`/api/v1/${accountNumber}`)
         .set('authorization', staffToken)
@@ -364,7 +365,7 @@ describe('Staff /', () => {
     it('should not list accounts by status if there is no token', (done) => {
       const status = 'active';
       chai.request(app)
-        .get(`/accounts/&&status=${status}`)
+        .get(`/api/v1/accounts/&&status=${status}`)
         .set('authorization', '')
         .end((err, res) => {
           res.should.have.status(401);
@@ -378,7 +379,7 @@ describe('Staff /', () => {
     it('should not display users account by status if token is unverifiable', (done) => {
       const status = 'dormant';
       chai.request(app)
-        .get(`/accounts/&&status=${status}`)
+        .get(`/api/v1/accounts/&&status=${status}`)
         .set('authorization', `${staffToken}vsgjskjs.yeu`)
         .end((err, res) => {
           res.should.have.status(401);
@@ -392,7 +393,7 @@ describe('Staff /', () => {
     it('should return the list of all accounts ', (done) => {
       const status = 'dormant';
       chai.request(app)
-        .get(`/accounts/&&status=${status}`)
+        .get(`/api/v1/accounts/&&status=${status}`)
         .set('authorization', staffToken)
         .end((err, res) => {
           res.should.have.status(200);

@@ -1,16 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import path from 'path';
+import cors from 'cors';
 
 import router from './routes/bankaroutes';
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', router);
 
-app.use(express.static(path.join(__dirname, '../UI')));
+app.all('*', (req, res) => {
+  res.status(404).json({ status: 404, error: 'not found' });
+});
 
 const PORT = process.env.PORT || 5000;
 

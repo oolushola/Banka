@@ -3,6 +3,8 @@
 # ADC - BANKA
 > LOS-Cycle 43 Challenge
 
+![Logo of the project](UI/images/landing-page-design.jpg)
+
 Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money
 
 ### Prerequisites
@@ -78,31 +80,32 @@ Banka App, deployed to Heroku. Accessible via public URL [Here](https://adc-bank
 
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
-|`POST`   | /api/v1/auth/register | Signup |  201 |
-|`POST`  | /api/v1/auth/user-login|  Login | 200  |
-|`PUT`  | /api/v1/update-profile/{user-id}|  Update Profile | 201  |
-|`POST`  | /api/v1/user/create-bank-account/{user-id}|  Create Bank Account| 201  |
-|`POST`  | /api/v1/user/password-reset|  Reset Password | 200  |
+|`POST`   | /api/v1/auth/register | signup |  201 |
+|`POST`  | /api/v1/auth/login|  login | 200  |
+|`PUT`  | /api/v1/update-profile|  update profile | 201  |
+|`GET`  | /account/{account-number}/transactions|  all user transactions | 200  |
+|`GET`  | //accounts/transactions/{transaction-id}|  user specific transaction | 200  |
+|`POST`  | /api/v1/accounts|  create bank account| 201  |
+|`PATCH`  | /api/v1/change-password|  change user password | 200  |
 
 `Staff`
 
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
-|`GET`  | /api/v1/users-account|  View all bank account | 200  |
-|`GET`  | /api/v1/{account-number}/{id}|  View single account | 200  |
 |`POST`  | /api/v1/auth/staff/login|  Login | 200  |
-|`POST`  | /api/v1/transaction/{account-number}/credit|  Credit client account | 201  |
-|`POST`  | /api/v1/transaction/{account-number}/debit|  Debit client account| 201  |
+|`POST`  | /api/v1/transactions/{account-number}|  Make transaction on account | 201  |
 |`DELETE`  | /api/v1/accounts/{account-number}|  Delete client account | 200  |
+|`GET`  | /api/v1/accounts|  View all users account | 200  |
+|`GET`  | /api/v1/{account-number}|  View specific account | 200  |
+|`GET`  | /api/v1/accounts/&&status={status}|  View all bank accounts by status | 200  |
 
 `Admin`
 
 |  Method  | URI             | Description  |  Status code |
 |:----------:|:---------------------:|--------------|:---------:|
 |`POST`  | /api/v1/auth/admin/login|  Login | 200  |
-|`PATCH`  | /api/v1/assign/accountNo|  Assign account number to client | 201  |
-|`PATCH`  | /api/v1/activate|  Activate the status of client account| 201  |
-|`PATCH`  | /api/v1/deactivate|  Deactivate the status of client account | 201  |
+|`PATCH`  | /api/v1/generate/account-number|  Assign account number to client | 201  |
+|`PATCH`  | /api/v1/accounts/account-id={owner}&&account-status={status}|  Update client account status| 201  |
 |`POST`  | /api/v1/admin/auth/registration|  create an admin/staff account | 201  |
 
 

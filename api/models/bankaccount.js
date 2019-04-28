@@ -12,7 +12,7 @@ const bankAccount = [
     owner: 2,
     dob: '\'10/10/2000\'',
     account_type: '\'current\'',
-    account_status: '\'Active\'',
+    account_status: '\'active\'',
     balance: 350000.00,
   },
 ];
