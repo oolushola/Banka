@@ -1,8 +1,5 @@
 [![Build Status](https://travis-ci.com/oolushola/Banka.svg?branch=develop)](https://travis-ci.com/oolushola/Banka) [![Coverage Status](https://coveralls.io/repos/github/oolushola/Banka/badge.svg?branch=develop)](https://coveralls.io/github/oolushola/Banka?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/b5cadd3bb7b57281c835/maintainability)](https://codeclimate.com/github/oolushola/Banka/maintainability) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# ADC - BANKA
-> LOS-Cycle 43 Challenge
-
 ![Logo of the project](UI/images/landing-page-design.jpg)
 
 Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money
@@ -120,7 +117,7 @@ please fork the repository and use a feature branch. Pull requests are warmly we
 
 A big thank you to the authors whose resource helped me profusely in achieving the banka project and worthy of honorable mentions.
 
-[Andela Homestudy Curriculum](https://homestudy.andela.com/), [Node.js & pgSQL](https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8),   [Jsonwebtoken](https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52), [Mocha](https://medium.com/@asciidev/testing-a-node-express-application-with-mocha-chai-9592d41c0083)
+ [Node.js & pgSQL](https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8),   [Jsonwebtoken](https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52), [Mocha](https://medium.com/@asciidev/testing-a-node-express-application-with-mocha-chai-9592d41c0083)
 
 ## Licensing
 
